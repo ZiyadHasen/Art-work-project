@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import User from '../models/UserModel.js';
-import Job from '../models/jobModel.js';
+import Job from '../models/ArtworkModel.js';
 import cloudinary from 'cloudinary';
 import { promises as fs } from 'fs';
 

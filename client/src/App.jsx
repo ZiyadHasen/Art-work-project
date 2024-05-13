@@ -16,11 +16,11 @@ import {
 } from './pages/index';
 import { action, action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
-import { action as AddJobAction } from './pages/AddJob';
+import { action as AddJobAction } from './pages/AddArtwork';
 import { loader as dashboardLoader } from './pages/DashboardLayout';
-import { loader as allJobsLoader } from './pages/AllJobs';
-import { loader as EditJobLoader } from './pages/EditJob';
-import { action as EditJobAction } from './pages/EditJob';
+import { loader as allJobsLoader } from './pages/AllArtworks';
+import { loader as EditJobLoader } from './pages/EditArtwork';
+import { action as EditJobAction } from './pages/EditArtwork';
 import { action as DeleteJobAction } from './pages/DeleteJob';
 import { loader as AdminLoader } from './pages/Admin';
 import { action as ProfileAction } from './pages/Profile';
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
             element: <Stats />,
           },
           {
-            path: 'all-jobs',
+            path: 'all-artworks',
             element: <AllJobs />,
             loader: allJobsLoader,
           },

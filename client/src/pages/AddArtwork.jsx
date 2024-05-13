@@ -1,7 +1,7 @@
 import { FormRow, FormRowSelect } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useOutletContext } from 'react-router-dom';
-import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
+import { ARTWORK_STATUS, ARTWORK_TYPE } from '../../../utils/constants';
 import { Form, useNavigation, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
@@ -10,10 +10,10 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
-    await customFetch.post('/jobs', data);
+    await customFetch.post('/artworks', data);
     toast.success('Job Added Successfully');
 
-    return redirect('all-jobs');
+    return redirect('all-artworks');
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -34,20 +34,15 @@ const AddJob = () => {
           <FormRow
             type='text'
             labelText='job location'
-            name='jobLocation'
+            name='artworkLocation'
             defaultValue={user.location}
           />
+          {/* there will be image field */}
           <FormRowSelect
-            name='jobStatus'
-            labelText='job status'
-            list={Object.values(JOB_STATUS)}
-            defaultValue={JOB_STATUS.PENDING}
-          />
-          <FormRowSelect
-            name='jobType'
-            labelText='job type'
-            list={Object.values(JOB_TYPE)}
-            defaultValue={JOB_TYPE.FULL_TIME}
+            name='artworkType'
+            labelText='artwork type'
+            list={Object.values(ARTWORK_TYPE)}
+            defaultValue={ARTWORK_TYPE.FULL_TIME}
           />
           <button
             type='submit'

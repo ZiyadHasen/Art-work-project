@@ -1,7 +1,7 @@
 import { FormRow, FormRowSelect } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useLoaderData } from 'react-router-dom';
-import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
+import { ARTWORK_TYPE } from '../../../utils/constants';
 import { Form, useNavigation, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
@@ -34,7 +34,7 @@ const EditJob = () => {
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
-  // console.log(Object.values(JOB_STATUS));
+  // console.log(Object.values(ARTWORK_STATUS));
 
   return (
     <Wrapper>
@@ -50,17 +50,12 @@ const EditJob = () => {
             defaultValue={job.jobLocation}
           />
 
-          <FormRowSelect
-            name='jobStatus'
-            labelText='job status'
-            defaultValue={job.jobStatus}
-            list={Object.values(JOB_STATUS)}
-          />
+          {/* there will be image field */}
           <FormRowSelect
             name='jobType'
             labelText='job type'
             defaultValue={job.jobType}
-            list={Object.values(JOB_TYPE)}
+            list={Object.values(ARTWORK_TYPE)}
           />
           <button
             type='submit'

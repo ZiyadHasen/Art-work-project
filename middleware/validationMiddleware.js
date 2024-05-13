@@ -4,9 +4,9 @@ import {
   NotFoundError,
   UnauthenticatedError,
 } from '../errors/customErrors.js';
-import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
+import { ARTWORK_STATUS, ARTWORK_TYPE } from '../utils/constants.js';
 import mongoose from 'mongoose';
-import Job from '../models/jobModel.js';
+import Artwork from '../models/ArtworkModel.js';
 import User from '../models/UserModel.js';
 
 const withValidationErrors = (validateValues) => {
@@ -31,25 +31,27 @@ const withValidationErrors = (validateValues) => {
   ];
 };
 
-export const validateJobInput = withValidationErrors([
+export const validateArtworkInput = withValidationErrors([
   body('company').notEmpty().withMessage('company is required'),
   body('position').notEmpty().withMessage('position is required'),
-  body('jobLocation').notEmpty().withMessage('job location is required'),
-  body('jobStatus')
-    .isIn(Object.values(JOB_STATUS))
-    .withMessage('invalid status value'),
-  body('jobType')
-    .isIn(Object.values(JOB_TYPE))
-    .withMessage('invalid job type value'),
+  body('artworkLocation')
+    .notEmpty()
+    .withMessage('artwork location is required'),
+  // body('artworkStatus')
+  //   .isIn(Object.values(ARTWORK_STATUS))
+  //   .withMessage('invalid status value'),
+  body('artworkType')
+    .isIn(Object.values(ARTWORK_TYPE))
+    .withMessage('invalid artwork type value'),
 ]);
 export const validateIdParam = withValidationErrors([
   param('id').custom(async (value, { req }) => {
     const isValidMongoId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidMongoId) throw new BadRequestError('invalid MongoDB id');
-    const job = await Job.findById(value);
-    if (!job) throw new NotFoundError(`no job with id ${value}`);
+    const artwork = await Artwork.findById(value);
+    if (!artwork) throw new NotFoundError(`no artwork with id ${value}`);
     const isAdmin = req.user.role === 'admin';
-    const isOwner = req.user.userId === job.createdBy.toString();
+    const isOwner = req.user.userId === artwork.createdBy.toString();
     if (!isAdmin && !isOwner)
       throw UnauthorizedError('not authorized to access this route');
   }),

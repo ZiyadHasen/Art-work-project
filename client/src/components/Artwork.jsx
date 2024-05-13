@@ -1,22 +1,21 @@
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa';
 import { Link, Form } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/Job';
-import JobInfo from './JobInfo';
+import Wrapper from '../assets/wrappers/Artwork';
+import ArtworkInfo from './ArtworkInfo';
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 day.extend(advancedFormat);
 
-const Job = ({
+const Artwork = ({
   _id,
   position,
   company,
-  jobLocation,
-  jobType,
+  artworkLocation,
+  artworkType,
   createdAt,
-  jobStatus,
 }) => {
   const date = day(createdAt).format('MMM Do,YYY');
-  // console.log(jobStatus);
+  // console.log(artworkStatus);
   return (
     <Wrapper>
       <header>
@@ -28,17 +27,16 @@ const Job = ({
       </header>
       <div className='content'>
         <div className='content-center'>
-          <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
-          <JobInfo icon={<FaCalendarAlt />} text={date} />
-          <JobInfo icon={<FaBriefcase />} text={jobType} />
-          <div className={`status ${jobStatus}`}>{jobStatus}</div>
+          <ArtworkInfo icon={<FaLocationArrow />} text={artworkLocation} />
+          <ArtworkInfo icon={<FaCalendarAlt />} text={date} />
+          <ArtworkInfo icon={<FaBriefcase />} text={artworkType} />
         </div>
 
         <footer className='actions'>
-          <Link className='btn edit-btn' to={`../edit-job/${_id}`}>
+          <Link className='btn edit-btn' to={`../edit-artwork/${_id}`}>
             Edit
           </Link>
-          <Form method='post' action={`../delete-job/${_id}`}>
+          <Form method='post' action={`../delete-artwork/${_id}`}>
             <button type='submit' className='btn delete-btn'>
               Delete
             </button>
@@ -48,4 +46,4 @@ const Job = ({
     </Wrapper>
   );
 };
-export default Job;
+export default Artwork;
