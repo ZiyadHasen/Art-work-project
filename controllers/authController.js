@@ -23,7 +23,11 @@ export const login = async (req, res) => {
   );
   if (!isPasswordCorrect) throw new UnauthenticatedError('no account found');
 
-  const token = createJWT({ userId: user._id, role: user.role });
+  const token = createJWT({
+    userId: user._id,
+    role: user.role,
+    name: user.name,
+  });
 
   const oneDay = 24 * 60 * 60 * 1000;
   res.cookie('token', token, {

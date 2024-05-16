@@ -8,11 +8,11 @@ import customFetch from '../utils/customFetch';
 
 export const loader = async ({ params }) => {
   try {
-    const { data } = await customFetch.get(`/jobs/${params.id}`);
+    const { data } = await customFetch.get(`/artworks/${params.id}`);
     return data;
   } catch (error) {
     toast.error(error.response.data.msg);
-    return redirect('/dashboard/all-jobs');
+    return redirect('/dashboard/all-artworks');
   }
 };
 export const action = async ({ request, params }) => {
@@ -20,9 +20,9 @@ export const action = async ({ request, params }) => {
   const data = Object.fromEntries(formData);
 
   try {
-    await customFetch.patch(`/jobs/${params.id}`, data);
-    toast.success('Job edited successfully');
-    return redirect('/dashboard/all-jobs');
+    await customFetch.patch(`/artworks/${params.id}`, data);
+    toast.success('item edited successfully');
+    return redirect('/dashboard/all-artworks');
   } catch (error) {
     toast.error(error.response.data.msg);
     return error;
@@ -30,7 +30,8 @@ export const action = async ({ request, params }) => {
 };
 
 const EditJob = () => {
-  const { job } = useLoaderData();
+  const { artwork } = useLoaderData();
+  // console.log(artwork);
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
@@ -39,24 +40,25 @@ const EditJob = () => {
   return (
     <Wrapper>
       <Form method='post' className='form'>
-        <h4 className='form-title'>edit job</h4>
+        <h4 className='form-title'>Edit Your work </h4>
+
         <div className='form-center'>
-          <FormRow type='text' name='position' defaultValue={job.position} />
-          <FormRow type='text' name='company' defaultValue={job.company} />
+          <FormRow type='text' name='title' defaultValue={artwork.title} />
           <FormRow
             type='text'
-            labelText='job location'
-            name='jobLocation'
-            defaultValue={job.jobLocation}
+            labelText='Add short Description'
+            name='description'
+            defaultValue={artwork.description}
           />
-
+          <FormRow type='text' name='price' defaultValue={artwork.price} />
+          <FormRow
+            type='text'
+            name='location'
+            defaultValue={artwork.location}
+          />
+          <div>wi will add fill add soon</div>
           {/* there will be image field */}
-          <FormRowSelect
-            name='jobType'
-            labelText='job type'
-            defaultValue={job.jobType}
-            list={Object.values(ARTWORK_TYPE)}
-          />
+
           <button
             type='submit'
             className='btn btn-block form-btn '

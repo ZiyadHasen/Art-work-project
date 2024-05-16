@@ -1,16 +1,21 @@
 import Artwork from '../models/ArtworkModel.js';
 import { StatusCodes } from 'http-status-codes';
+import User from '../models/UserModel.js';
 
 export const getAllArtworks = async (req, res) => {
-  console.log(req.user);
   const artworks = await Artwork.find({ createdBy: req.user.userId });
+  // console.log(req.user.name);
   // console.log(artworks);
   res.status(StatusCodes.OK).json({ artworks });
 };
 
 export const createArtwork = async (req, res) => {
+  // const user = await User.findById(req.user.userId).lean();
+
   // *here we are adding another field in the req.body
   req.body.createdBy = req.user.userId;
+  req.body.createdByName = req.user.name;
+
   const artwork = await Artwork.create(req.body);
   res.status(StatusCodes.CREATED).json({ artwork });
 };

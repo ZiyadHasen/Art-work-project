@@ -32,17 +32,14 @@ const withValidationErrors = (validateValues) => {
 };
 
 export const validateArtworkInput = withValidationErrors([
-  body('company').notEmpty().withMessage('company is required'),
-  body('position').notEmpty().withMessage('position is required'),
-  body('artworkLocation')
+  body('title').notEmpty().withMessage('title is required'),
+  body('description')
     .notEmpty()
-    .withMessage('artwork location is required'),
-  // body('artworkStatus')
-  //   .isIn(Object.values(ARTWORK_STATUS))
-  //   .withMessage('invalid status value'),
-  body('artworkType')
-    .isIn(Object.values(ARTWORK_TYPE))
-    .withMessage('invalid artwork type value'),
+    .withMessage('Description is required')
+    .isLength({ max: 200 })
+    .withMessage('Description is too long'),
+  body('location').notEmpty().withMessage('location is required'),
+  body('price').notEmpty().withMessage('price is required'),
 ]);
 export const validateIdParam = withValidationErrors([
   param('id').custom(async (value, { req }) => {

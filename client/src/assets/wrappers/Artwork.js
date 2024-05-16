@@ -13,6 +13,25 @@ const Wrapper = styled.article`
     grid-template-columns: auto 1fr;
     align-items: center;
   }
+
+  .artwork-image {
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: auto;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+  }
+  .artwork-title {
+    color: var(--grey-600);
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  .artwork-description {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--grey-300);
+    color: var(--grey-400);
+    font-size: 16px;
+  }
   .main-icon {
     width: 60px;
     height: 60px;
@@ -43,9 +62,9 @@ const Wrapper = styled.article`
   .content-center {
     display: grid;
     margin-top: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     grid-template-columns: 1fr;
-    row-gap: 1.5rem;
+    row-gap: 1rem;
     align-items: center;
     @media (min-width: 576px) {
       grid-template-columns: 1fr 1fr;
@@ -61,10 +80,19 @@ const Wrapper = styled.article`
     display: grid;
     align-items: center;
   }
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .actions {
     margin-top: 1rem;
     display: flex;
     align-items: center;
+  }
+  .add-cart-btn {
+    height: 30px;
+    font-size: 0.85rem;
   }
   .edit-btn,
   .delete-btn {

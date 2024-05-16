@@ -3,22 +3,16 @@ import { ARTWORK_STATUS, ARTWORK_TYPE } from '../utils/constants.js';
 
 const Artwork = new mongoose.Schema(
   {
-    company: String,
-    position: String,
-    artworkStatus: {
-      type: String,
-      enum: Object.values(ARTWORK_STATUS),
-      default: ARTWORK_STATUS.PENDING,
-    },
-    artworkType: {
-      type: String,
-      enum: Object.values(ARTWORK_TYPE),
-      default: ARTWORK_TYPE.DRAWING,
-    },
+    title: String,
+    description: String,
+    location: String,
+    price: String,
+
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: 'User',
     },
+    createdByName: String, // Adding createdByName field
   },
   { timestamps: true }
 );

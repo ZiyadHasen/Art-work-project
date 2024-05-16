@@ -1,7 +1,6 @@
 import { FormRow, FormRowSelect } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useOutletContext } from 'react-router-dom';
-import { ARTWORK_STATUS, ARTWORK_TYPE } from '../../../utils/constants';
 import { Form, useNavigation, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
@@ -9,6 +8,8 @@ import customFetch from '../utils/customFetch';
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
+  // console.log(data);
+
   try {
     await customFetch.post('/artworks', data);
     toast.success('Job Added Successfully');
@@ -27,23 +28,20 @@ const AddJob = () => {
   return (
     <Wrapper>
       <Form method='post' className='form'>
-        <h4 className='form-title'>add job</h4>
+        <h4 className='form-title'>Add Your Artwork </h4>
+
         <div className='form-center'>
-          <FormRow type='text' name='position' />
-          <FormRow type='text' name='company' />
+          <FormRow type='text' name='title' />
           <FormRow
             type='text'
-            labelText='job location'
-            name='artworkLocation'
-            defaultValue={user.location}
+            labelText='Add short Description'
+            name='description'
           />
+          <FormRow type='text' name='price' />
+          <FormRow type='text' name='location' />
+          <div>wi will add fill add soon</div>
           {/* there will be image field */}
-          <FormRowSelect
-            name='artworkType'
-            labelText='artwork type'
-            list={Object.values(ARTWORK_TYPE)}
-            defaultValue={ARTWORK_TYPE.FULL_TIME}
-          />
+
           <button
             type='submit'
             className='btn btn-block form-btn '
