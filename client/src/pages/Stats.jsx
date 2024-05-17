@@ -1,7 +1,8 @@
 import React from 'react';
+import '../index.css';
 
 const Stats = () => {
-  return <h1>Stats</h1>;
+  return <h1 className='text-red-600 text-8xl'>Stats</h1>;
 };
 
 export default Stats;

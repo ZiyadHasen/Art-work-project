@@ -1,15 +1,8 @@
-import tailwindConfig from 'tailwindcss'; // Rename imported variable
-
-const customConfig = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography'), require('daisyui')],
+  plugins: [],
 };
-
-export default customConfig;
