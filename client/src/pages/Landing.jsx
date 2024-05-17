@@ -14,7 +14,7 @@ const Landing = () => {
       <div className='container page'>
         <div className='info'>
           <h1>
-            job <span>tracking</span> app
+            Ethio <span>Art</span> gallery
           </h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
