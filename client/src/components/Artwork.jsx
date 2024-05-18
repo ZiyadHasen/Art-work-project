@@ -34,8 +34,6 @@ const Artwork = ({
     <Wrapper>
       <img src={avatar} alt='artwork image' className='artwork-image ' />
       <div className='content'>
-        {/* <h3 className='artwork-title'>{title}</h3>
-        <p className='artwork-description'>{description}</p> */}
         <div className='collapse'>
           <input type='checkbox' />
           <div className='collapse-title artwork-title'>{title}</div>
@@ -65,7 +63,7 @@ const Artwork = ({
           </Link> */}
           {/* Open the modal using document.getElementById('ID').showModal() method */}
           <button
-            className='btn bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[16px]  border-0'
+            className='px-4 py-3 rounded-md bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[16px]  border-0'
             onClick={() => document.getElementById('my_modal_5').showModal()}
           >
             Add To Cart

@@ -26,7 +26,7 @@ const Wrapper = styled.article`
     color: var(--primary-600);
   }
   .artwork-description {
-    color: var(--grey-400);
+    color: var(--grey-500);
     font-size: 16px;
     /* color: var(--primary-500); */
   }

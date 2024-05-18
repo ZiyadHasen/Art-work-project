@@ -7,12 +7,21 @@ import customFetch from '../utils/customFetch';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
+
   const file = formData.get('avatar');
   // ! reduce the last zero
   if (file && file.size > 5000000) {
     toast.error('Image size too large');
     return null;
   }
+
+  // Validate description length
+  const description = formData.get('description');
+  if (description && description.length > 400) {
+    toast.error('Description should not exceed 400 characters');
+    return null;
+  }
+
   try {
     await customFetch.post('/artworks', formData);
     toast.success('Your work Added Successfully');
@@ -45,11 +54,15 @@ const AddJob = () => {
               accept='image/*'
             />
           </div>
-          <FormRow
-            type='text'
-            labelText='Add short Description'
-            name='description'
-          />
+          <div className='form-row'>
+            <label className='form-label'>Add Description</label>
+            <textarea
+              type='text'
+              name='description'
+              className='form-input w-full textarea-bordered textarea-xs '
+            ></textarea>
+          </div>
+          {/* <FormRow type='text' labelText='' name='description' /> */}
           <FormRow type='text' name='price' />
           <FormRow type='text' name='location' />
 

@@ -4,7 +4,6 @@ import {
   NotFoundError,
   UnauthenticatedError,
 } from '../errors/customErrors.js';
-import { ARTWORK_STATUS, ARTWORK_TYPE } from '../utils/constants.js';
 import mongoose from 'mongoose';
 import Artwork from '../models/ArtworkModel.js';
 import User from '../models/UserModel.js';
@@ -34,11 +33,7 @@ const withValidationErrors = (validateValues) => {
 export const validateArtworkInput = withValidationErrors([
   body('title').notEmpty().withMessage('title is required'),
 
-  body('description')
-    .notEmpty()
-    .withMessage('Description is required')
-    .isLength({ max: 200 })
-    .withMessage('Description is too long'),
+  body('description').notEmpty().withMessage('Description is required'),
   body('location').notEmpty().withMessage('location is required'),
   body('price').notEmpty().withMessage('price is required'),
 ]);

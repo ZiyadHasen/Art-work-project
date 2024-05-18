@@ -96,9 +96,26 @@ export const updateArtwork = async (req, res) => {
 };
 
 export const deleteArtwork = async (req, res) => {
-  const removedArtwork = await Artwork.findByIdAndDelete(req.params.id);
+  try {
+    const artwork = await Artwork.findById(req.params.id);
+    if (!artwork) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: 'Artwork not found' });
+    }
 
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: 'artwork deleted', artwork: removedArtwork });
+    if (artwork.avatarPublicId) {
+      await cloudinary.uploader.destroy(artwork.avatarPublicId);
+    }
+
+    await Artwork.findByIdAndDelete(req.params.id);
+
+    res.status(StatusCodes.OK).json({ msg: 'Artwork deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: 'Failed to delete artwork. Please try again later.',
+      error: error.message,
+    });
+  }
 };

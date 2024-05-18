@@ -23,6 +23,12 @@ export const action = async ({ request, params }) => {
     return null;
   }
 
+  // Validate description length
+  const description = formData.get('description');
+  if (description && description.length > 400) {
+    toast.error('Description should not exceed 400 characters');
+    return null;
+  }
   try {
     await customFetch.patch(`/artworks/${params.id}`, formData);
     toast.success('item edited successfully');
@@ -59,12 +65,21 @@ const EditJob = () => {
               accept='image/*'
             />
           </div>
-          <FormRow
+          <div className='form-row'>
+            <label className='form-label'>Add Description</label>
+            <textarea
+              type='text'
+              name='description'
+              defaultValue={artwork.description}
+              className='form-input w-full textarea-bordered textarea-xs '
+            ></textarea>
+          </div>
+          {/* <FormRow
             type='text'
             labelText='Add short Description'
             name='description'
             defaultValue={artwork.description}
-          />
+          /> */}
           <FormRow type='text' name='price' defaultValue={artwork.price} />
           <FormRow
             type='text'
