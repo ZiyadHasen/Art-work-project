@@ -52,27 +52,40 @@ export const updateArtwork = async (req, res) => {
     }
 
     const newArtwork = { ...req.body };
+
     if (req.file) {
-      const response = await cloudinary.v2.uploader.upload(req.file.path, {
-        transformation: [{ width: 500, height: 500, crop: 'fill' }],
-      });
-      await fs.unlink(req.file.path);
-      newArtwork.avatar = response.secure_url;
-      newArtwork.avatarPublicId = response.public_id;
-    }
+      try {
+        const response = await cloudinary.v2.uploader.upload(req.file.path, {
+          transformation: [{ height: 500, crop: 'fill' }],
+        });
 
-    const updatedArtwork = await Artwork.findByIdAndUpdate(
-      req.params.id,
-      newArtwork,
-      {
-        new: true,
+        await fs.unlink(req.file.path); // Delete file after successful upload
+        newArtwork.avatar = response.secure_url;
+        newArtwork.avatarPublicId = response.public_id;
+
+        // If there was an existing avatar, delete the old one
+        if (existingArtwork.avatarPublicId) {
+          const destroyResponse = await cloudinary.v2.uploader.destroy(
+            existingArtwork.avatarPublicId
+          );
+          console.log('Cloudinary destroy response:', destroyResponse);
+        }
+      } catch (uploadError) {
+        console.error(uploadError);
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          message: 'Failed to upload the new avatar. Please try again later.',
+          error: uploadError.message,
+        });
       }
-    );
-
-    // If a new file was uploaded and there was an existing avatar, delete the old one
-    if (req.file && existingArtwork.avatarPublicId) {
-      await cloudinary.v2.uploader.destroy(existingArtwork.avatarPublicId);
     }
+
+    // Update the existing artwork with newArtwork data
+    for (const key in newArtwork) {
+      existingArtwork[key] = newArtwork[key];
+    }
+
+    // Save the updated artwork
+    const updatedArtwork = await existingArtwork.save();
 
     res
       .status(StatusCodes.OK)

@@ -38,7 +38,7 @@ const Artwork = ({
         <p className='artwork-description'>{description}</p>
         <div className='content-center'>
           <ArtworkInfo icon={<FaLocationArrow />} text={location} />
-          <ArtworkInfo icon={<FaCalendarAlt />} text={createdAt} />
+          <ArtworkInfo icon={<FaCalendarAlt />} text={date} />
           <ArtworkInfo icon={<BsCurrencyDollar />} text={price} isbirr />
           <ArtworkInfo icon={<FaUser />} text={createdByName} />
         </div>
