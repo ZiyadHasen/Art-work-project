@@ -14,9 +14,7 @@ export const createArtwork = async (req, res) => {
   try {
     const newArtwork = { ...req.body };
     if (req.file) {
-      const response = await cloudinary.v2.uploader.upload(req.file.path, {
-        transformation: [{ width: 773, height: 579, crop: 'fill' }],
-      });
+      const response = await cloudinary.v2.uploader.upload(req.file.path);
       await fs.unlink(req.file.path);
       newArtwork.avatar = response.secure_url;
       newArtwork.avatarPublicId = response.public_id;
@@ -55,9 +53,7 @@ export const updateArtwork = async (req, res) => {
 
     if (req.file) {
       try {
-        const response = await cloudinary.v2.uploader.upload(req.file.path, {
-          transformation: [{ height: 500, crop: 'fill' }],
-        });
+        const response = await cloudinary.v2.uploader.upload(req.file.path);
 
         await fs.unlink(req.file.path); // Delete file after successful upload
         newArtwork.avatar = response.secure_url;

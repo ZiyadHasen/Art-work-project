@@ -34,8 +34,15 @@ const Artwork = ({
     <Wrapper>
       <img src={avatar} alt='artwork image' className='artwork-image ' />
       <div className='content'>
-        <h3 className='artwork-title'>{title}</h3>
-        <p className='artwork-description'>{description}</p>
+        {/* <h3 className='artwork-title'>{title}</h3>
+        <p className='artwork-description'>{description}</p> */}
+        <div className='collapse'>
+          <input type='checkbox' />
+          <div className='collapse-title artwork-title'>{title}</div>
+          <div className='collapse-content'>
+            <p className='artwork-description'>{description}</p>
+          </div>
+        </div>
         <div className='content-center'>
           <ArtworkInfo icon={<FaLocationArrow />} text={location} />
           <ArtworkInfo icon={<FaCalendarAlt />} text={date} />
@@ -44,11 +51,11 @@ const Artwork = ({
         </div>
         <div className='footer-container'>
           <footer className='actions'>
-            <Link className='btn edit-btn' to={`../edit-artwork/${_id}`}>
+            <Link className='button edit-btn' to={`../edit-artwork/${_id}`}>
               Edit
             </Link>
             <Form method='post' action={`../delete-artwork/${_id}`}>
-              <button type='submit' className='btn delete-btn'>
+              <button type='submit' className='button delete-btn'>
                 Delete
               </button>
             </Form>
@@ -56,9 +63,32 @@ const Artwork = ({
           {/* <Link className='btn add-cart-btn' to={`../edit-artwork/${_id}`}>
             Add to Cart
           </Link> */}
-          <button className='btn add-cart-btn' onClick={openCart}>
-            Add to Cart
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <button
+            className='btn bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[16px]  border-0'
+            onClick={() => document.getElementById('my_modal_5').showModal()}
+          >
+            Add To Cart
           </button>
+          <dialog
+            id='my_modal_5'
+            className='modal modal-bottom sm:modal-middle'
+          >
+            <div className='modal-box'>
+              <h3 className='font-bold text-lg'>Hello!</h3>
+              <p className='py-4'>
+                Press ESC key or click the button below to close
+              </p>
+              <h2 className='text-red-700'>Cart Items will be added here</h2>
+              <div className='modal-action'>
+                <form method='dialog'>
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className='btn'>Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+
           {isCartOpen && <CartModal onClose={closeCart} />}
         </div>
       </div>

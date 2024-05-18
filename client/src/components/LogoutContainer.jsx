@@ -11,7 +11,7 @@ const LogoutContainer = () => {
     <Wrapper>
       <button
         type='button'
-        className='btn logout-btn'
+        className='button logout-btn'
         onClick={() => {
           setShowLogout(!showLogout);
         }}

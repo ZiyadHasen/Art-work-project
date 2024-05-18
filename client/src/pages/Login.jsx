@@ -28,10 +28,14 @@ const Login = () => {
         <h4>login</h4>
         <FormRow type='email' name='email' defaultValue='john@gmail.com' />
         <FormRow type='password' name='password' defaultValue='12345678' />
-        <button type='submit' className='btn btn-block' disabled={isSubmitting}>
+        <button
+          type='submit'
+          className='button button-block my-3'
+          disabled={isSubmitting}
+        >
           {isSubmitting ? 'submitting...' : 'submit'}
         </button>
-        <button type='button' className='btn btn-block'>
+        <button type='button' className='button button-block'>
           explore the app
         </button>
         <p>

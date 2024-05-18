@@ -22,10 +22,10 @@ const Landing = () => {
             voluptatum! Placeat dicta est unde sed fuga assumenda error
             perferendis dignissimos facilis.
           </p>
-          <Link to='/register' className='btn register-link'>
+          <Link to='/register' className='button register-link'>
             Register
           </Link>
-          <Link to='/login' className='btn'>
+          <Link to='/login' className='button'>
             Login /Demo
           </Link>
         </div>
