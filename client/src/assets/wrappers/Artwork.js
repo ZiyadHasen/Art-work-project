@@ -15,8 +15,8 @@ const Wrapper = styled.article`
   }
 
   .artwork-image {
-    max-width: 100%; /* Adjust the maximum width as needed */
-    height: auto;
+    /* max-width: 100%;
+    height: auto; */
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
   }

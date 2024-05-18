@@ -3,6 +3,8 @@ const UserSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
+  avatar: String,
+  avatarPublicId: String,
   lastName: {
     type: String,
     default: 'lastName',
@@ -16,8 +18,6 @@ const UserSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  avatar: String,
-  avatarPublicId: String,
 });
 UserSchema.methods.toJSON = function () {
   let obj = this.toObject();

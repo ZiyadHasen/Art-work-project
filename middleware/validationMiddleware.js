@@ -33,6 +33,7 @@ const withValidationErrors = (validateValues) => {
 
 export const validateArtworkInput = withValidationErrors([
   body('title').notEmpty().withMessage('title is required'),
+
   body('description')
     .notEmpty()
     .withMessage('Description is required')

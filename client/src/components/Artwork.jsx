@@ -17,6 +17,7 @@ const Artwork = ({
   description,
   createdAt,
   createdByName,
+  avatar,
 }) => {
   const date = day(createdAt).format('MMM Do,YYY');
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -31,12 +32,7 @@ const Artwork = ({
 
   return (
     <Wrapper>
-      <img
-        src='https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg'
-        alt='Shoes'
-        className='artwork-image'
-      />
-
+      <img src={avatar} alt='artwork image' className='artwork-image ' />
       <div className='content'>
         <h3 className='artwork-title'>{title}</h3>
         <p className='artwork-description'>{description}</p>

@@ -7,17 +7,18 @@ import customFetch from '../utils/customFetch';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  // console.log(data);
-
+  const file = formData.get('avatar');
+  // ! reduce the last zero
+  if (file && file.size > 5000000) {
+    toast.error('Image size too large');
+    return null;
+  }
   try {
-    await customFetch.post('/artworks', data);
-    toast.success('Job Added Successfully');
-
+    await customFetch.post('/artworks', formData);
+    toast.success('Your work Added Successfully');
     return redirect('all-artworks');
   } catch (error) {
     toast.error(error?.response?.data?.msg);
-    return error;
   }
 };
 
@@ -27,11 +28,23 @@ const AddJob = () => {
   const isSubmitting = navigation.state === 'submitting';
   return (
     <Wrapper>
-      <Form method='post' className='form'>
+      <Form method='post' className='form' encType='multipart/form-data'>
         <h4 className='form-title'>Add Your Artwork </h4>
 
         <div className='form-center'>
           <FormRow type='text' name='title' />
+          <div className='form-row'>
+            <label htmlFor='avatar' className='form-label'>
+              Select an image file (max 0.5 MB):
+            </label>
+            <input
+              type='file'
+              id='avatar'
+              name='avatar'
+              className='form-input'
+              accept='image/*'
+            />
+          </div>
           <FormRow
             type='text'
             labelText='Add short Description'
@@ -39,8 +52,6 @@ const AddJob = () => {
           />
           <FormRow type='text' name='price' />
           <FormRow type='text' name='location' />
-          <div>wi will add fill add soon</div>
-          {/* there will be image field */}
 
           <button
             type='submit'

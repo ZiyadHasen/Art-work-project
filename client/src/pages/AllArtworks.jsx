@@ -23,7 +23,6 @@ const AllArtworks = () => {
     <AllArtworksContext.Provider value={{ data }}>
       {/* <SearchContainer /> */}
       <ArtworksContainer />
-      <h2 className='text-blue-600 m-20'></h2>
     </AllArtworksContext.Provider>
   );
 };
