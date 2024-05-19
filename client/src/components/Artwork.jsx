@@ -39,20 +39,6 @@ const Artwork = ({
           <ArtworkInfo icon={<FaUser />} text={createdByName} />
         </div>
         <div className='footer-container'>
-          {/* <footer className='actions'>
-            <Link className='button edit-btn' to={`../edit-artwork/${_id}`}>
-              Edit
-            </Link>
-            <Form method='post' action={`../delete-artwork/${_id}`}>
-              <button type='submit' className='button delete-btn'>
-                Delete
-              </button>
-            </Form>
-          </footer> */}
-          {/* <Link className='btn add-cart-btn' to={`../edit-artwork/${_id}`}>
-            Add to Cart
-          </Link> */}
-          {/* Open the modal using document.getElementById('ID').showModal() method */}
           <button
             className='px-3 py-2 rounded-md bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[14px]  border-0'
             onClick={() => document.getElementById('my_modal_5').showModal()}
