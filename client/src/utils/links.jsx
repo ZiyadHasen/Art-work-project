@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { IoBarChartSharp } from 'react-icons/io5';
+import { TiGroupOutline } from 'react-icons/ti';
 import { MdQueryStats } from 'react-icons/md';
 import { FaWpforms } from 'react-icons/fa';
-import { ImProfile } from 'react-icons/im';
+import { BsPersonLinesFill } from 'react-icons/bs';
 import { MdAdminPanelSettings } from 'react-icons/md';
+import { FaPalette } from 'react-icons/fa';
 
 const links = [
   {
@@ -13,8 +14,9 @@ const links = [
     icon: <FaWpforms />,
   },
   { text: 'all artworks', path: 'all-artworks', icon: <MdQueryStats /> },
-  { text: 'stats', path: 'stats', icon: <IoBarChartSharp /> },
-  { text: 'profile', path: 'profile', icon: <ImProfile /> },
+  { text: 'my Works', path: 'my-artworks', icon: <FaPalette /> },
+  { text: 'events', path: 'stats', icon: <TiGroupOutline /> },
+  { text: 'profile', path: 'profile', icon: <BsPersonLinesFill /> },
   { text: 'admin', path: 'admin', icon: <MdAdminPanelSettings /> },
 ];
 

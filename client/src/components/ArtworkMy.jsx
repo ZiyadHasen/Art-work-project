@@ -5,11 +5,12 @@ import Wrapper from '../assets/wrappers/Artwork';
 import ArtworkInfo from './ArtworkInfo';
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import Cart from './Cart';
+import CartModal from './CartModel';
 import { useState } from 'react';
+import Cart from './Cart';
 day.extend(advancedFormat);
 
-const Artwork = ({
+const ArtworkMy = ({
   _id,
   title,
   location,
@@ -39,7 +40,7 @@ const Artwork = ({
           <ArtworkInfo icon={<FaUser />} text={createdByName} />
         </div>
         <div className='footer-container'>
-          {/* <footer className='actions'>
+          <footer className='actions'>
             <Link className='button edit-btn' to={`../edit-artwork/${_id}`}>
               Edit
             </Link>
@@ -48,21 +49,10 @@ const Artwork = ({
                 Delete
               </button>
             </Form>
-          </footer> */}
-          {/* <Link className='btn add-cart-btn' to={`../edit-artwork/${_id}`}>
-            Add to Cart
-          </Link> */}
-          {/* Open the modal using document.getElementById('ID').showModal() method */}
-          <button
-            className='px-3 py-2 rounded-md bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[14px]  border-0'
-            onClick={() => document.getElementById('my_modal_5').showModal()}
-          >
-            Add To Cart
-          </button>
+          </footer>
         </div>
-        <Cart />
       </div>
     </Wrapper>
   );
 };
-export default Artwork;
+export default ArtworkMy;

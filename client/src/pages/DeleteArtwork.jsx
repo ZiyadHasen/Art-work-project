@@ -13,7 +13,7 @@ export const action = async ({ params }) => {
   }
   return redirect('/dashboard/all-artworks');
 };
-const DeleteJob = () => {
-  return <h1>DeleteJob</h1>;
+const DeleteArtwork = () => {
+  return <h1>DeleteArtwork</h1>;
 };
-export default DeleteJob;
+export default DeleteArtwork;

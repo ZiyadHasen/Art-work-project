@@ -7,21 +7,23 @@ import {
   Login,
   DashboardLayout,
   Error,
-  AddJob,
+  AddArtwork,
   Stats,
-  AllJobs,
+  AllArtworks,
   Profile,
   Admin,
-  EditJob,
+  EditArtwork,
+  MyArtworks,
 } from './pages/index';
 import { action, action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
-import { action as AddJobAction } from './pages/AddArtwork';
+import { action as AddArtworkAction } from './pages/AddArtwork';
 import { loader as dashboardLoader } from './pages/DashboardLayout';
-import { loader as allJobsLoader } from './pages/AllArtworks';
-import { loader as EditJobLoader } from './pages/EditArtwork';
-import { action as EditJobAction } from './pages/EditArtwork';
-import { action as DeleteJobAction } from './pages/DeleteJob';
+import { loader as allArtworksLoader } from './pages/AllArtworks';
+import { loader as myArtworksLoader } from './pages/MyArtworks';
+import { loader as EditArtworkLoader } from './pages/EditArtwork';
+import { action as EditArtworkAction } from './pages/EditArtwork';
+import { action as DeleteArtworkAction } from './pages/DeleteArtwork';
 import { loader as AdminLoader } from './pages/Admin';
 import { action as ProfileAction } from './pages/Profile';
 
@@ -54,15 +56,20 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         loader: dashboardLoader,
         children: [
-          { index: true, element: <AddJob />, action: AddJobAction },
+          { index: true, element: <AddArtwork />, action: AddArtworkAction },
           {
             path: 'stats',
             element: <Stats />,
           },
           {
             path: 'all-artworks',
-            element: <AllJobs />,
-            loader: allJobsLoader,
+            element: <AllArtworks />,
+            loader: allArtworksLoader,
+          },
+          {
+            path: 'my-artworks',
+            element: <MyArtworks />,
+            loader: myArtworksLoader,
           },
           {
             path: 'profile',
@@ -76,11 +83,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'edit-artwork/:id',
-            element: <EditJob />,
-            action: EditJobAction,
-            loader: EditJobLoader,
+            element: <EditArtwork />,
+            action: EditArtworkAction,
+            loader: EditArtworkLoader,
           },
-          { path: 'delete-artwork/:id', action: DeleteJobAction },
+          { path: 'delete-artwork/:id', action: DeleteArtworkAction },
         ],
       },
       { path: '/error', element: <Error /> },
