@@ -2,6 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 import {
+  getMyArtworks,
   getAllArtworks,
   getArtwork,
   createArtwork,
@@ -16,10 +17,10 @@ import upload from '../middleware/multerMiddleware.js';
 
 // router.get('/', getAllArtworks);
 // router.post('/', createArtwork);
-
+router.get('/my-artworks', getMyArtworks);
+router.get('/all-artworks', getAllArtworks);
 router
   .route('/')
-  .get(getAllArtworks)
   .post(upload.single('avatar'), validateArtworkInput, createArtwork);
 router
   .route('/:id')

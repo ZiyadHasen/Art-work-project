@@ -7,7 +7,7 @@ import ArtworksContainer from '../components/artworksContainer';
 
 export const loader = async () => {
   try {
-    const { data } = await customFetch.get('/artworks');
+    const { data } = await customFetch.get('/artworks/all-artworks');
     // console.log(data);
     return { data };
   } catch (error) {

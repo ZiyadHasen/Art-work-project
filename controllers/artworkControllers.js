@@ -3,8 +3,14 @@ import { StatusCodes } from 'http-status-codes';
 import cloudinary from 'cloudinary';
 import { promises as fs } from 'fs';
 
-export const getAllArtworks = async (req, res) => {
+export const getMyArtworks = async (req, res) => {
   const artworks = await Artwork.find({ createdBy: req.user.userId });
+  // console.log(req.user.name);
+  // console.log(artworks);
+  res.status(StatusCodes.OK).json({ artworks });
+};
+export const getAllArtworks = async (req, res) => {
+  const artworks = await Artwork.find();
   // console.log(req.user.name);
   // console.log(artworks);
   res.status(StatusCodes.OK).json({ artworks });
