@@ -30,11 +30,21 @@ const withValidationErrors = (validateValues) => {
   ];
 };
 
-export const validateArtworkInput = withValidationErrors([
-  body('title').notEmpty().withMessage('title is required'),
+const capitalize = (str) => {
+  if (typeof str !== 'string') return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
 
+export const validateArtworkInput = withValidationErrors([
+  body('title')
+    .notEmpty()
+    .withMessage('Title is required')
+    .customSanitizer(capitalize),
   body('description').notEmpty().withMessage('Description is required'),
-  body('location').notEmpty().withMessage('location is required'),
+  body('location')
+    .notEmpty()
+    .withMessage('Location is required')
+    .customSanitizer(capitalize),
   body('price').notEmpty().withMessage('price is required'),
 ]);
 export const validateIdParam = withValidationErrors([

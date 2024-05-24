@@ -1,6 +1,5 @@
 import { Router } from 'express';
 const router = Router();
-
 import {
   getMyArtworks,
   getAllArtworks,
@@ -14,6 +13,7 @@ import {
   validateArtworkInput,
 } from '../middleware/validationMiddleware.js';
 import upload from '../middleware/multerMiddleware.js';
+import { checkForTestUser } from '../middleware/authMiddleware.js';
 
 // router.get('/', getAllArtworks);
 // router.post('/', createArtwork);
@@ -21,11 +21,21 @@ router.get('/my-artworks', getMyArtworks);
 router.get('/all-artworks', getAllArtworks);
 router
   .route('/')
-  .post(upload.single('avatar'), validateArtworkInput, createArtwork);
+  .post(
+    checkForTestUser,
+    upload.single('avatar'),
+    validateArtworkInput,
+    createArtwork
+  );
 router
   .route('/:id')
   .get(validateIdParam, getArtwork)
-  .patch(upload.single('avatar'), validateArtworkInput, updateArtwork)
-  .delete(validateIdParam, deleteArtwork);
+  .patch(
+    checkForTestUser,
+    upload.single('avatar'),
+    validateArtworkInput,
+    updateArtwork
+  )
+  .delete(checkForTestUser, validateIdParam, deleteArtwork);
 
 export default router;

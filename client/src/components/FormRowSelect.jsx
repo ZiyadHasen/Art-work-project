@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FormRowSelect({ name, labelText, list, defaultValue = '' }) {
+function FormRowSelect({ name, labelText, list, defaultValue = '', onChange }) {
   return (
     <div className='form-row'>
       <label htmlFor={name} className='form-label'>
@@ -9,7 +9,8 @@ function FormRowSelect({ name, labelText, list, defaultValue = '' }) {
       <select
         name={name}
         id={name}
-        className='form-select'
+        className='form-select outline-none'
+        onChange={onChange}
         defaultValue={defaultValue}
       >
         {list.map((itemValue) => {

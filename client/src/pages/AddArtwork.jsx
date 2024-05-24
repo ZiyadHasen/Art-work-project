@@ -28,6 +28,7 @@ export const action = async ({ request }) => {
     return redirect('all-artworks');
   } catch (error) {
     toast.error(error?.response?.data?.msg);
+    return error;
   }
 };
 

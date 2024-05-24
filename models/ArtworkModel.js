@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { ARTWORK_STATUS, ARTWORK_TYPE } from '../utils/constants.js';
 
 const ArtworkSchema = new mongoose.Schema(
   {
