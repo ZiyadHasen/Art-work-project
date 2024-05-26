@@ -7,17 +7,18 @@ import ArtworksContainer from '../components/artworksContainer';
 import SearchContainer from '../components/SearchContainer';
 export const loader = async ({ request }) => {
   // !this is how our query params are converted to objects extracted from the url
-
   try {
     const params = Object.fromEntries([
       ...new URL(request.url).searchParams.entries(),
     ]);
-    // console.log(params);
+    // Default to page 1 if not specified
+    const currentPage = parseInt(params.page) || 1;
+
     const { data } = await customFetch.get('/artworks/all-artworks', {
       params,
     });
     // console.log(data);
-    return { data, searchValues: { ...params } };
+    return { data: { ...data, currentPage }, searchValues: { ...params } };
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -26,7 +27,7 @@ export const loader = async ({ request }) => {
 const AllArtworksContext = createContext();
 const AllArtworks = () => {
   const { data, searchValues } = useLoaderData();
-  // console.log(data);
+  console.log(data, searchValues);
   return (
     <AllArtworksContext.Provider value={{ data, searchValues }}>
       <SearchContainer />
