@@ -7,15 +7,13 @@ import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
+import { useCartContext } from '../contexts/cartContext'; // Import the CartContext
 
 day.extend(advancedFormat);
-let CartItems = [];
 
 const loader = async ({ params }) => {
   try {
     const { data } = await customFetch.get(`/artworks/${params.id}`);
-    CartItems.push(data);
-    console.log('CartItems:', CartItems);
     return data;
   } catch (error) {
     console.error(error);
@@ -23,7 +21,7 @@ const loader = async ({ params }) => {
     return {};
   }
 };
-// console.log(CartItems);
+
 const Artwork = ({
   _id,
   title,
@@ -34,13 +32,22 @@ const Artwork = ({
   createdByName,
   avatar,
 }) => {
-  const date = day(createdAt).format('MMM Do,YYY');
+  const { addToCart, cartItems } = useCartContext(); // Destructure addToCart from the context
+  const date = day(createdAt).format('MMM Do, YYYY');
 
   const handleAddToCart = async () => {
     try {
       const data = await loader({ params: { id: _id } });
-      console.log('Artwork data:', data);
-      // Handle adding the artwork to the cart here
+      const isInCartItem = cartItems.some(
+        (item) => item.artwork._id === data.artwork._id
+      );
+
+      if (isInCartItem) {
+        toast.error('Artwork already in cart');
+      } else {
+        addToCart(data); // Add artwork to the cart using context method
+        toast.success('Artwork added to cart');
+      }
     } catch (error) {
       console.error(error);
       toast.error('Failed to add artwork to cart');
@@ -76,6 +83,6 @@ const Artwork = ({
   );
 };
 
-export { CartItems, loader }; // Export CartItems and loader as named exports
+export { loader }; // Export loader as named export
 
 export default Artwork;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Outlet, redirect, useLoaderData, useNavigate } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Dashboard';
 import { Navbar, BigSidebar, SmallNavbar } from '../components';
@@ -6,6 +7,7 @@ import { useState, createContext, useContext } from 'react';
 import { checkDefaultTheme } from '../App';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
+import CartProvider from '../contexts/cartContext'; // Import CartProvider
 
 export const loader = async () => {
   try {
@@ -51,22 +53,26 @@ const DashboardLayout = () => {
         logoutUser,
       }}
     >
-      <Wrapper>
-        <main className='dashboard'>
-          <BigSidebar />
-          <SmallNavbar />
-          <div>
-            <Navbar />
-            <div className='dashboard-page'>
-              {/* we can pass the data like this for all components here  */}
-              <Outlet context={{ user }} />
+      <CartProvider>
+        {' '}
+        {/* Wrap the CartProvider around the Dashboard components */}
+        <Wrapper>
+          <main className='dashboard'>
+            <BigSidebar />
+            <SmallNavbar />
+            <div>
+              <Navbar />
+              <div className='dashboard-page'>
+                <Outlet context={{ user }} />
+              </div>
             </div>
-          </div>
-        </main>
-      </Wrapper>
+          </main>
+        </Wrapper>
+      </CartProvider>
     </DashboardContext.Provider>
   );
 };
+
 export const useDashboardContext = () => useContext(DashboardContext);
 
 export default DashboardLayout;

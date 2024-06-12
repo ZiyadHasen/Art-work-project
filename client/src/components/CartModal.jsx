@@ -1,21 +1,30 @@
-import React from 'react';
-import { FaTimes, FaPlus, FaMinus } from 'react-icons/fa';
+import React, { useEffect } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
-import { BsPlusLg } from 'react-icons/bs';
-import { PiMinusLight } from 'react-icons/pi';
 
-const CartModal = ({
-  show,
-  handleClose,
-  cartItems,
-  handleIncrease,
-  handleDecrease,
-  handleRemove,
-}) => {
+const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling
+    } else {
+      document.body.style.overflow = 'auto'; // Enable scrolling
+    }
+  }, [show]);
+
   const calculateTotal = () => {
-    return cartItems
-      .reduce((acc, item) => acc + item.price * item.quantity, 0)
-      .toFixed(2);
+    // Check if cartItems is not an array or if it's empty
+    if (!Array.isArray(cartItems) || cartItems.length === 0) {
+      return '0.00'; // Return 0 if cartItems is not valid
+    }
+
+    // Sum up the prices of all items
+    const totalPrice = cartItems.reduce(
+      (acc, item) => acc + Number(item.artwork.price),
+      0
+    );
+
+    // Return the total price with "birr" and two decimal places
+    return `${totalPrice.toFixed(2)} birr`;
   };
 
   if (!show) return null;
@@ -43,27 +52,16 @@ const CartModal = ({
               >
                 <div>
                   <h5 className='text-lg text-black font-semibold'>
-                    {item.title}
+                    {item.artwork.title}
                   </h5>
-                  <p className='text-black'>Price: {Number(item.price)} birr</p>
+                  <p className='text-black'>
+                    Price: {Number(item.artwork.price)} birr
+                  </p>
                 </div>
                 <div className='flex items-center'>
                   <button
-                    className='text-black focus:outline-none'
-                    onClick={() => handleDecrease(index)}
-                  >
-                    <PiMinusLight />
-                  </button>
-                  <span className='px-2 text-black'>{item.quantity}</span>
-                  <button
-                    className='text-black focus:outline-none'
-                    onClick={() => handleIncrease(index)}
-                  >
-                    <BsPlusLg />
-                  </button>
-                  <button
                     className='text-[#b01e1e] text-lg cursor-pointer focus:outline-none'
-                    onClick={() => handleRemove(index)}
+                    onClick={() => removeFromCart(index)}
                   >
                     <MdClose />
                   </button>
@@ -75,13 +73,13 @@ const CartModal = ({
 
         <div className='flex justify-between items-center mt-4'>
           <h5 className='text-lg text-black font-semibold'>
-            Total Price: {calculateTotal()} birr
+            Total Price: {calculateTotal()}
           </h5>
           <button
             className='px-3 py-2 rounded-md bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[14px] border-0'
             onClick={handleClose}
           >
-            Pay Now
+            Purchase Now
           </button>
         </div>
       </div>

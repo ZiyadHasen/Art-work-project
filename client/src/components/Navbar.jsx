@@ -1,42 +1,20 @@
-import React, { useState, useEffect } from 'react'; // Import useEffect
+import React, { useState } from 'react';
 import Wrapper from '../assets/wrappers/Navbar';
-import { FaAlignLeft, FaCartPlus } from 'react-icons/fa'; // Import FaCartPlus
+import { FaAlignLeft, FaCartPlus } from 'react-icons/fa';
 import Logo from './logo';
 import { useDashboardContext } from '../pages/DashboardLayout';
 import LogoutContainer from './LogoutContainer';
 import ThemeToggle from './ThemeToggle';
 import CartModal from './CartModal';
-import { CartItems } from './Artwork';
+import { useCartContext } from '../contexts/cartContext'; // Import the CartContext
 
 const Navbar = () => {
   const { toggleSidebar } = useDashboardContext();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [cartItemsState, setCartItemsState] = useState([]);
 
-  useEffect(() => {
-    setCartItemsState(CartItems); // Update cartItemsState when CartItems change
-  }, [CartItems]);
-
-  const handleIncrease = (index) => {
-    const updatedCartItems = [...cartItemsState];
-    updatedCartItems[index].quantity++;
-    setCartItemsState(updatedCartItems);
-  };
-
-  const handleDecrease = (index) => {
-    const updatedCartItems = [...cartItemsState];
-    if (updatedCartItems[index].quantity > 1) {
-      updatedCartItems[index].quantity--;
-      setCartItemsState(updatedCartItems);
-    }
-  };
-
-  const handleRemove = (index) => {
-    const updatedCartItems = cartItemsState.filter((_, i) => i !== index);
-    setCartItemsState(updatedCartItems);
-  };
+  const { cartItems, removeFromCart } = useCartContext(); // Destructure cartItems from the context
 
   return (
     <Wrapper>
@@ -55,7 +33,7 @@ const Navbar = () => {
             <button className='relative' onClick={handleShow}>
               <FaCartPlus className='text-3xl text-current' />
               <span className='absolute top-0 right-0 text-white text-sm font-bold rounded-md px-[6px] py-[2px] bg-[#ecbb21] transform translate-x-1/2 -translate-y-1/2'>
-                {cartItemsState.length}
+                {cartItems.length}
               </span>
             </button>
           </div>
@@ -63,10 +41,8 @@ const Navbar = () => {
         <CartModal
           show={show}
           handleClose={handleClose}
-          cartItems={cartItemsState}
-          handleIncrease={handleIncrease}
-          handleDecrease={handleDecrease}
-          handleRemove={handleRemove}
+          cartItems={cartItems}
+          removeFromCart={removeFromCart}
         />
       </div>
     </Wrapper>
