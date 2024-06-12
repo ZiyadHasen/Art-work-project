@@ -7,7 +7,7 @@ import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import CartModal from './CartModel';
 import { useState } from 'react';
-import Cart from './Cart';
+import Cart from './CartModal';
 day.extend(advancedFormat);
 
 const ArtworkMy = ({

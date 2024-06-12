@@ -27,7 +27,7 @@ export const loader = async ({ request }) => {
 const AllArtworksContext = createContext();
 const AllArtworks = () => {
   const { data, searchValues } = useLoaderData();
-  console.log(data, searchValues);
+  // console.log(data, searchValues);
   return (
     <AllArtworksContext.Provider value={{ data, searchValues }}>
       <SearchContainer />

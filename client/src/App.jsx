@@ -15,7 +15,7 @@ import {
   EditArtwork,
   MyArtworks,
 } from './pages/index';
-import { action, action as registerAction } from './pages/Register';
+import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
 import { action as AddArtworkAction } from './pages/AddArtwork';
 import { loader as dashboardLoader } from './pages/DashboardLayout';
@@ -26,6 +26,8 @@ import { action as EditArtworkAction } from './pages/EditArtwork';
 import { action as DeleteArtworkAction } from './pages/DeleteArtwork';
 import { loader as AdminLoader } from './pages/Admin';
 import { action as ProfileAction } from './pages/Profile';
+import CartSuccess from './pages/CartSuccess';
+import CartCancel from './pages/CartCancel';
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
@@ -64,6 +66,16 @@ const router = createBrowserRouter([
           {
             path: 'all-artworks',
             element: <AllArtworks />,
+            loader: allArtworksLoader,
+          },
+          {
+            path: 'cart-success',
+            element: <CartSuccess />,
+            loader: allArtworksLoader,
+          },
+          {
+            path: 'cart-canceled',
+            element: <CartCancel />,
             loader: allArtworksLoader,
           },
           {

@@ -11,7 +11,7 @@ const BigSidebar = () => {
     <Wrapper>
       <div
         className={
-          showSidebar ? 'sidebar-container ' : 'show-sidebar ssidebar-container'
+          showSidebar ? 'sidebar-container ' : 'show-sidebar sidebar-container'
         }
       >
         <div className='content'>

@@ -8,7 +8,7 @@ const PageBtnContainer = () => {
     data: { numOfPages, currentPage },
   } = useAllArtworksContext();
 
-  console.log(numOfPages, currentPage);
+  // console.log(numOfPages, currentPage);
   // console.log(data);
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
