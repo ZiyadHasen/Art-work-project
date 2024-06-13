@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 
 const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
+  console.log(cartItems);
   useEffect(() => {
     if (show) {
       document.body.style.overflow = 'hidden'; // Disable scrolling
@@ -25,6 +26,33 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
 
     // Return the total price with "birr" and two decimal places
     return `${totalPrice.toFixed(2)} birr`;
+  };
+
+  const handlePurchase = async () => {
+    try {
+      const response = await fetch('/api/v1/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: cartItems,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        window.location.href = data.url; // Redirect to Stripe Checkout
+      } else {
+        console.error('Error:', data.error);
+        alert('Failed to create checkout session');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred during checkout');
+    }
   };
 
   if (!show) return null;
@@ -77,7 +105,7 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
           </h5>
           <button
             className='px-3 py-2 rounded-md bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[14px] border-0'
-            onClick={handleClose}
+            onClick={handlePurchase}
           >
             Purchase Now
           </button>

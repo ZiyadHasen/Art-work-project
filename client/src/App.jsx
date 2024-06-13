@@ -54,6 +54,16 @@ const router = createBrowserRouter([
       { path: '/landing', element: <Landing /> },
       { path: '/login', element: <Login />, action: loginAction },
       {
+        path: 'cart-success',
+        element: <CartSuccess />,
+        // loader: allArtworksLoader,
+      },
+      {
+        path: 'cart-canceled',
+        element: <CartCancel />,
+        // loader: allArtworksLoader,
+      },
+      {
         path: '/dashboard',
         element: <DashboardLayout />,
         loader: dashboardLoader,
@@ -68,16 +78,7 @@ const router = createBrowserRouter([
             element: <AllArtworks />,
             loader: allArtworksLoader,
           },
-          {
-            path: 'cart-success',
-            element: <CartSuccess />,
-            loader: allArtworksLoader,
-          },
-          {
-            path: 'cart-canceled',
-            element: <CartCancel />,
-            loader: allArtworksLoader,
-          },
+
           {
             path: 'my-artworks',
             element: <MyArtworks />,
