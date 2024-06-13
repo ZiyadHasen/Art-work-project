@@ -1,4 +1,4 @@
-#### Complete App
+<!-- #### Complete App
 
 [Jobify](https://jobify.live/)
 
@@ -6868,4 +6868,4 @@ const apiLimiter = rateLimiter({
 });
 router.post('/register', apiLimiter, validateRegisterInput, register);
 router.post('/login', apiLimiter, validateLoginInput, login);
-```
+``` -->
