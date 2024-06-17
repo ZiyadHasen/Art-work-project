@@ -15,7 +15,7 @@ const links = [
   },
   { text: 'all artworks', path: 'all-artworks', icon: <MdQueryStats /> },
   { text: 'my Works', path: 'my-artworks', icon: <FaPalette /> },
-  { text: 'events', path: 'stats', icon: <TiGroupOutline /> },
+  { text: 'events', path: 'events', icon: <TiGroupOutline /> },
   { text: 'profile', path: 'profile', icon: <BsPersonLinesFill /> },
   { text: 'admin', path: 'admin', icon: <MdAdminPanelSettings /> },
 ];

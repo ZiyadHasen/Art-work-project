@@ -29,25 +29,14 @@ const Login = () => {
   const isSubmitting = navigation.state === 'submitting';
 
   const navigate = useNavigate();
-  const loginDemoUser = async () => {
-    const data = { email: 'test@test.com', password: 'secret123' };
 
-    try {
-      await customFetch.post('/auth/login', data);
-      toast.success('Take a test drive');
-      navigate('/dashboard');
-    } catch (error) {
-      toast.error(error?.response?.data?.msg);
-      return;
-    }
-  };
   return (
     <Wrapper>
       <Form method='post' className='form'>
         <Logo />
         <h4>login</h4>
-        <FormRow type='email' name='email' defaultValue='john@gmail.com' />
-        <FormRow type='password' name='password' defaultValue='12345678' />
+        <FormRow type='email' name='email' />
+        <FormRow type='password' name='password' />
         <button
           type='submit'
           className='button button-block my-3'
@@ -55,13 +44,7 @@ const Login = () => {
         >
           {isSubmitting ? 'submitting...' : 'submit'}
         </button>
-        {/* <button
-          type='button'
-          className='button button-block'
-          onClick={loginDemoUser}
-        >
-          explore the app
-        </button> */}
+
         <p>
           Not a member yet?
           <Link to='/register' className=' member-btn'>

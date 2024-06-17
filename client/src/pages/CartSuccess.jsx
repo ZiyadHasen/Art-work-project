@@ -1,25 +1,29 @@
+// CartSuccess.jsx
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+// import { CheckCircleIcon } from '@heroicons/react/solid';
 
-const CartCancel = () => {
+const CartSuccess = () => {
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
-      <div className='bg-white p-6 rounded-lg shadow-md max-w-md w-full'>
-        <h2 className='text-3xl font-semibold text-red-600 mb-4'>
-          Payment Cancellation
+    <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6'>
+      <div className='bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center'>
+        {/* <CheckCircleIcon className='h-24 w-24 text-green-500 mx-auto' /> */}
+        <h2 className='text-2xl font-semibold mt-4 text-gray-800'>
+          Payment Successful!
         </h2>
-
-        <div className='flex justify-center'>
-          <Link
-            to='/dashboard'
-            className='bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md text-lg'
+        <p className='text-gray-600 mt-2'>
+          Thank you for your purchase. Your payment was successfully processed.
+        </p>
+        <div className='mt-6'>
+          <button
+            className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+            onClick={() => (window.location.href = '/dashboard')}
           >
             Continue Shopping
-          </Link>
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default CartCancel;
+export default CartSuccess;

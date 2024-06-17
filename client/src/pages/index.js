@@ -4,7 +4,7 @@ export { default as HomeLayout } from './HomeLayout';
 export { default as Register } from './Register';
 export { default as Login } from './Login';
 export { default as Error } from './Error';
-export { default as Stats } from './Stats';
+export { default as Events } from './Events';
 export { default as AllArtworks } from './AllArtworks';
 export { default as MyArtworks } from './MyArtworks';
 export { default as AddArtwork } from './AddArtwork';

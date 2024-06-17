@@ -8,7 +8,7 @@ import {
   DashboardLayout,
   Error,
   AddArtwork,
-  Stats,
+  Events,
   AllArtworks,
   Profile,
   Admin,
@@ -70,8 +70,8 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <AddArtwork />, action: AddArtworkAction },
           {
-            path: 'stats',
-            element: <Stats />,
+            path: 'events',
+            element: <Events />,
           },
           {
             path: 'all-artworks',
