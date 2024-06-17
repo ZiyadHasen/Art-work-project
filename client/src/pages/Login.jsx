@@ -55,13 +55,13 @@ const Login = () => {
         >
           {isSubmitting ? 'submitting...' : 'submit'}
         </button>
-        <button
+        {/* <button
           type='button'
           className='button button-block'
           onClick={loginDemoUser}
         >
           explore the app
-        </button>
+        </button> */}
         <p>
           Not a member yet?
           <Link to='/register' className=' member-btn'>

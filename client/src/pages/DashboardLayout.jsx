@@ -54,8 +54,6 @@ const DashboardLayout = () => {
       }}
     >
       <CartProvider>
-        {' '}
-        {/* Wrap the CartProvider around the Dashboard components */}
         <Wrapper>
           <main className='dashboard'>
             <BigSidebar />
