@@ -60,7 +60,7 @@ const Artwork = ({
       <div className='content'>
         <div className='collapse'>
           <input type='checkbox' />
-          <div className='collapse-title artwork-title'>{title}</div>
+          <div className='collapse-title artwork-title z-0'>{title}</div>
           <div className='collapse-content'>
             <p className='artwork-description'>{description}</p>
           </div>

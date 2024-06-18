@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageTwo from '../assets/images/imageTwo.jpg';
 
 const EventHeroTwo = () => {
   return (
@@ -6,8 +7,8 @@ const EventHeroTwo = () => {
       <div className=' flex justify-center items-center p-20'>
         <div className='flex gap-10'>
           <img
-            src='https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg'
-            className='max-w-sm flex-1 rounded-lg shadow-2xl'
+            src={ImageTwo}
+            className='max-w-sm flex-1 h-[25rem] rounded-lg shadow-2xl'
           />
           <div>
             <h1 className='text-5xl font-bold'>Box Office News!</h1>
