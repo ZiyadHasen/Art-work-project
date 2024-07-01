@@ -79,6 +79,9 @@ app.post('/api/v1/create-checkout-session', async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+});
 
 //! Error middleware
 app.use(errorHandlerMiddleware);
