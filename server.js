@@ -5,15 +5,17 @@ import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import cloudinary from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
 import cors from 'cors';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import stripePackage from 'stripe';
+import Stripe from 'stripe';
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
 
 const app = express();
-const stripe = stripePackage(process.env.STRIPE_PRIVATE_KEY);
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
 //! custom imports Routers
 import artworkRouter from './routers/artworkRouter.js';
@@ -36,12 +38,20 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use(express.static(path.resolve(__dirname, './public')));
+// Security middleware
+app.use(helmet());
+app.use(mongoSanitize());
+
+app.use(express.static(path.resolve(__dirname, './client/dist')));
+app.use('/uploads', express.static(path.resolve(__dirname, './public/uploads')));
 app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: 'http://localhost:5500',
+    origin: process.env.NODE_ENV === 'production' 
+      ? process.env.CLIENT_URL 
+      : ['http://localhost:5173', 'http://localhost:3000'],
+    credentials: true,
   })
 );
 
@@ -80,7 +90,7 @@ app.post('/api/v1/create-checkout-session', async (req, res) => {
   }
 });
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
 });
 
 //! Error middleware

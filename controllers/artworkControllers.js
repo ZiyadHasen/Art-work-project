@@ -1,6 +1,6 @@
 import Artwork from '../models/ArtworkModel.js';
 import { StatusCodes } from 'http-status-codes';
-import cloudinary from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
 import { promises as fs } from 'fs';
 
 export const getAllArtworks = async (req, res) => {
@@ -55,7 +55,7 @@ export const createArtwork = async (req, res) => {
   try {
     const newArtwork = { ...req.body };
     if (req.file) {
-      const response = await cloudinary.v2.uploader.upload(req.file.path);
+      const response = await cloudinary.uploader.upload(req.file.path);
       await fs.unlink(req.file.path);
       newArtwork.avatar = response.secure_url;
       newArtwork.avatarPublicId = response.public_id;
@@ -94,7 +94,7 @@ export const updateArtwork = async (req, res) => {
 
     if (req.file) {
       try {
-        const response = await cloudinary.v2.uploader.upload(req.file.path);
+        const response = await cloudinary.uploader.upload(req.file.path);
 
         await fs.unlink(req.file.path); // Delete file after successful upload
         newArtwork.avatar = response.secure_url;
@@ -102,7 +102,7 @@ export const updateArtwork = async (req, res) => {
 
         // If there was an existing avatar, delete the old one
         if (existingArtwork.avatarPublicId) {
-          const destroyResponse = await cloudinary.v2.uploader.destroy(
+          const destroyResponse = await cloudinary.uploader.destroy(
             existingArtwork.avatarPublicId
           );
           console.log('Cloudinary destroy response:', destroyResponse);
