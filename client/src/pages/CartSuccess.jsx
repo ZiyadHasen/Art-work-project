@@ -1,6 +1,3 @@
-// CartSuccess.jsx
-import React from 'react';
-// import { CheckCircleIcon } from '@heroicons/react/solid';
 
 const CartSuccess = () => {
   return (
@@ -16,7 +13,7 @@ const CartSuccess = () => {
         <div className='mt-6'>
           <button
             className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
-            onClick={() => (window.location.href = '/dashboard')}
+            onClick={() => (window.location.href = 'https://artshowcase.vercel.app/dashboard')}
           >
             Continue Shopping
           </button>

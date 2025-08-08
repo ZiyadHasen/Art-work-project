@@ -1,6 +1,7 @@
 import  { useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
+import customFetch from '../utils/customFetch';
 
 const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
   console.log(cartItems);
@@ -30,14 +31,8 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
 
   const handlePurchase = async () => {
     try {
-      const response = await fetch('/api/v1/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          items: cartItems,
-        }),
+      const response = await customFetch.post('/create-checkout-session', {
+        items: cartItems,
       });
 
       const data = await response.json();

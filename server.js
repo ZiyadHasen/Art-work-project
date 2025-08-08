@@ -50,7 +50,7 @@ app.use(
   cors({
     origin: process.env.NODE_ENV === 'production' 
       ? process.env.CLIENT_URL 
-      : ['http://localhost:5173', 'http://localhost:3000'],
+      : ['http://localhost:5173', 'http://localhost:3000', 'https://art-work-project.onrender.com'],
     credentials: true,
   })
 );
@@ -80,7 +80,7 @@ app.post('/api/v1/create-checkout-session', async (req, res) => {
         quantity: 1, // Adjust if necessary
       })),
       success_url: `${process.env.CLIENT_URL}/cart-success`,
-      cancel_url: `${process.env.CLIENT_URL}/cart-canceled'`,
+      cancel_url: `${process.env.CLIENT_URL}/cart-canceled`,
     });
     res.json({ url: session.url });
   } catch (e) {

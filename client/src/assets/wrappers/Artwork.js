@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.article`
-  background: white;
+  background: var(--background-secondary-color);
   border-radius: 16px;
   display: grid;
   grid-template-rows: 1fr auto;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
   overflow: hidden;
-  border: 1px solid #f1f5f9;
+  border: 1px solid var(--grey-200);
   
   &:hover {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -35,7 +35,7 @@ const Wrapper = styled.article`
     font-size: 1.4rem;
     font-weight: 600;
     text-transform: capitalize;
-    color: #1e293b;
+    color: var(--text-color);
     margin-bottom: 0.5rem;
     line-height: 1.3;
   }
@@ -45,7 +45,7 @@ const Wrapper = styled.article`
   }
   
   .artwork-description {
-    color: #64748b;
+    color: var(--text-secondary-color);
     font-size: 14px;
     line-height: 1.5;
     margin: 0;
@@ -65,7 +65,7 @@ const Wrapper = styled.article`
   }
   
   .read-more {
-    color: #2cb1bc;
+    color: var(--primary-500);
     font-size: 12px;
     font-weight: 500;
     margin-top: 0.25rem;

@@ -19,7 +19,7 @@ const Event = ({
   const formattedDate = day(date).format('MMM Do, YYYY');
   
   return (
-    <div className='bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300'>
+    <div className='bg-[var(--background-secondary-color)] rounded-xl shadow-lg overflow-hidden border border-[var(--grey-200)] hover:shadow-xl transition-shadow duration-300'>
       {/* Event Image */}
       <div className='relative h-48 overflow-hidden'>
         <img 
@@ -43,30 +43,30 @@ const Event = ({
 
       {/* Event Content */}
       <div className='p-6'>
-        <h3 className='text-xl font-bold text-gray-800 mb-2'>{title}</h3>
-        <p className='text-gray-600 mb-4 line-clamp-2'>{description}</p>
+        <h3 className='text-xl font-bold text-[var(--text-color)] mb-2'>{title}</h3>
+        <p className='text-[var(--text-secondary-color)] mb-4 line-clamp-2'>{description}</p>
         
         {/* Event Details */}
         <div className='space-y-2 mb-4'>
-          <div className='flex items-center text-gray-600'>
-            <FaCalendarAlt className='mr-2 text-[#2cb1bc]' />
+          <div className='flex items-center text-[var(--text-secondary-color)]'>
+            <FaCalendarAlt className='mr-2 text-[var(--primary-500)]' />
             <span>{formattedDate}</span>
           </div>
-          <div className='flex items-center text-gray-600'>
-            <FaClock className='mr-2 text-[#2cb1bc]' />
+          <div className='flex items-center text-[var(--text-secondary-color)]'>
+            <FaClock className='mr-2 text-[var(--primary-500)]' />
             <span>{time}</span>
           </div>
-          <div className='flex items-center text-gray-600'>
-            <FaMapMarkerAlt className='mr-2 text-[#2cb1bc]' />
+          <div className='flex items-center text-[var(--text-secondary-color)]'>
+            <FaMapMarkerAlt className='mr-2 text-[var(--primary-500)]' />
             <span>{location}</span>
           </div>
-          <div className='flex items-center text-gray-600'>
-            <FaUsers className='mr-2 text-[#2cb1bc]' />
+          <div className='flex items-center text-[var(--text-secondary-color)]'>
+            <FaUsers className='mr-2 text-[var(--primary-500)]' />
             <span>Organized by {organizer}</span>
           </div>
           {capacity && (
-            <div className='flex items-center text-gray-600'>
-              <FaUsers className='mr-2 text-[#2cb1bc]' />
+            <div className='flex items-center text-[var(--text-secondary-color)]'>
+              <FaUsers className='mr-2 text-[var(--primary-500)]' />
               <span>Capacity: {capacity} people</span>
             </div>
           )}

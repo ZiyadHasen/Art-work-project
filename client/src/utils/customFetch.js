@@ -1,6 +1,6 @@
 import axios from 'axios';
 const customFetch = axios.create({
-  baseURL: '/api/v1',
+  baseURL: 'https://art-work-project.onrender.com/api/v1',
 });
 
 export default customFetch;
