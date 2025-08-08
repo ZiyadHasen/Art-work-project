@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import {
   HomeLayout,
@@ -14,6 +14,7 @@ import {
   Admin,
   EditArtwork,
   MyArtworks,
+  Stats,
 } from './pages/index';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
@@ -25,6 +26,7 @@ import { loader as EditArtworkLoader } from './pages/EditArtwork';
 import { action as EditArtworkAction } from './pages/EditArtwork';
 import { action as DeleteArtworkAction } from './pages/DeleteArtwork';
 import { loader as AdminLoader } from './pages/Admin';
+import { loader as StatsLoader } from './pages/Stats';
 import { action as ProfileAction } from './pages/Profile';
 import CartSuccess from './pages/CartSuccess';
 import CartCancel from './pages/CartCancel';
@@ -93,6 +95,11 @@ const router = createBrowserRouter([
             path: 'admin',
             element: <Admin />,
             loader: AdminLoader,
+          },
+          {
+            path: 'stats',
+            element: <Stats />,
+            loader: StatsLoader,
           },
           {
             path: 'edit-artwork/:id',

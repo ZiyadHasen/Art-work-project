@@ -16,6 +16,12 @@ export const getApplicationStats = async (req, res) => {
   res.status(StatusCodes.OK).json({ users, artworks });
 };
 
+export const getPublicStats = async (req, res) => {
+  const users = await User.countDocuments();
+  const artworks = await Artwork.countDocuments();
+  res.status(StatusCodes.OK).json({ users, artworks });
+};
+
 export const updateUser = async (req, res) => {
   const newUser = { ...req.body };
   delete newUser.password;

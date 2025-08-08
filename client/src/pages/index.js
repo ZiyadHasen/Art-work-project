@@ -11,3 +11,4 @@ export { default as AddArtwork } from './AddArtwork';
 export { default as EditArtwork } from './EditArtwork';
 export { default as Profile } from './Profile';
 export { default as Admin } from './Admin';
+export { default as Stats } from './Stats';

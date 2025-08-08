@@ -3,6 +3,7 @@ import {
   getApplicationStats,
   getCurrentUser,
   updateUser,
+  getPublicStats,
 } from '../controllers/userController.js';
 import { validateUpdateUserInput } from '../middleware/validationMiddleware.js';
 import { authorizePermissions } from '../middleware/authMiddleware.js';
@@ -15,6 +16,7 @@ router.get(
   authorizePermissions('admin'),
   getApplicationStats
 );
+router.get('/stats', getPublicStats);
 router.patch(
   '/update-user',
 
