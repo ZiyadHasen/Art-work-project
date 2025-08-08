@@ -6,6 +6,7 @@ import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { toast } from 'react-toastify';
 import { useCartContext } from '../contexts/cartContext';
+import { useState } from 'react';
 
 day.extend(advancedFormat);
 
@@ -20,6 +21,7 @@ const Artwork = ({
   avatar,
 }) => {
   const { addToCart, cartItems } = useCartContext(); // Destructure addToCart from the context
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const date = day(createdAt).format('MMM Do, YYYY');
 
   const handleAddToCart = () => {
@@ -56,14 +58,21 @@ const Artwork = ({
   return (
     <Wrapper>
       <img src={avatar} alt='artwork image' className='artwork-image ' />
-      <div className='content'>
-        <div className='collapse'>
-          <input type='checkbox' />
-          <div className='collapse-title artwork-title z-0'>{title}</div>
-          <div className='collapse-content'>
-            <p className='artwork-description'>{description}</p>
+              <div className='content'>
+          <div className='artwork-title'>{title}</div>
+          <div 
+            className='artwork-description-container'
+            onClick={() => setShowFullDescription(!showFullDescription)}
+          >
+            <p className={`artwork-description ${showFullDescription ? 'expanded' : 'truncated'}`}>
+              {description}
+            </p>
+            {description.length > 100 && (
+              <span className='read-more'>
+                {showFullDescription ? 'Show less' : 'Read more'}
+              </span>
+            )}
           </div>
-        </div>
         <div className='content-center'>
           <ArtworkInfo icon={<FaLocationArrow />} text={location} />
           <ArtworkInfo icon={<FaCalendarAlt />} text={date} />
@@ -73,7 +82,7 @@ const Artwork = ({
 
         <button
           onClick={handleAddToCart}
-          className='px-3 py-2 rounded-md bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[14px]  border-0'
+          className='w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#2cb1bc] to-[#14919b] hover:from-[#14919b] hover:to-[#0f7a87] text-white font-medium text-sm border-0 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg'
         >
           Add To Cart
         </button>

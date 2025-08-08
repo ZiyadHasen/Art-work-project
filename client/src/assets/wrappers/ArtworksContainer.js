@@ -16,7 +16,7 @@ const Wrapper = styled.section`
   }
   @media (min-width: 1120px) {
     .artworks {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 2rem;
     }
   }

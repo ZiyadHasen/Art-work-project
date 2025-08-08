@@ -1,4 +1,3 @@
-import React from 'react';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
 import { useLoaderData } from 'react-router-dom';
