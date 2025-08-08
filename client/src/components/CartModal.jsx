@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 
@@ -58,58 +58,79 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
   if (!show) return null;
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'>
-      <div className='bg-[#F0F0F0] w-full max-w-md mx-auto rounded-lg p-4 shadow-lg'>
-        <div className='flex justify-between items-center mb-4'>
-          <h2 className='text-xl text-black self-end font-semibold'>
-            Cart Summary
+    <div 
+      className='fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center z-[99999] p-4'
+      onClick={handleClose}
+    >
+      <div 
+        className='bg-white w-full max-w-2xl mx-auto rounded-xl shadow-2xl border border-gray-200 overflow-hidden'
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className='flex justify-between items-center p-6 border-b border-gray-200 bg-[#2cb1bc] text-white'>
+          <h2 className='text-xl font-semibold'>
+            🛒 Cart Summary
           </h2>
-          <FaTimes
+          <button
             onClick={handleClose}
-            className='text-[#b01e1e] cursor-pointer text-2xl '
-          />
+            className='text-white hover:text-gray-200 cursor-pointer text-2xl transition-colors duration-200 p-1 rounded-full hover:bg-white hover:bg-opacity-20'
+          >
+            <FaTimes />
+          </button>
         </div>
-        <div className='space-y-4'>
+
+        {/* Content */}
+        <div className='p-6 max-h-96 overflow-y-auto'>
           {cartItems.length === 0 ? (
-            <p>Your cart is empty</p>
+            <div className='text-center py-8'>
+              <div className='text-6xl mb-4'>🛍️</div>
+              <p className='text-gray-500 text-lg'>Your cart is empty</p>
+              <p className='text-gray-400 text-sm mt-2'>Add some beautiful artworks to get started!</p>
+            </div>
           ) : (
-            cartItems.map((item, index) => (
-              <div
-                key={index}
-                className='flex items-center justify-between border-b pb-2 mb-2'
-              >
-                <div>
-                  <h5 className='text-lg text-black font-semibold'>
-                    {item.artwork.title}
-                  </h5>
-                  <p className='text-black'>
-                    Price: {Number(item.artwork.price)} birr
-                  </p>
-                </div>
-                <div className='flex items-center'>
+            <div className='space-y-4'>
+              {cartItems.map((item, index) => (
+                <div
+                  key={index}
+                  className='flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors duration-200'
+                >
+                  <div className='flex-1'>
+                    <h5 className='text-lg font-semibold text-gray-800 mb-1'>
+                      {item.artwork.title}
+                    </h5>
+                    <p className='text-gray-600 font-medium'>
+                      {Number(item.artwork.price).toLocaleString()} birr
+                    </p>
+                  </div>
                   <button
-                    className='text-[#b01e1e] text-lg cursor-pointer focus:outline-none'
+                    className='ml-4 text-red-500 hover:text-red-700 cursor-pointer text-xl transition-colors duration-200 p-2 rounded-full hover:bg-red-50'
                     onClick={() => removeFromCart(index)}
+                    title='Remove from cart'
                   >
                     <MdClose />
                   </button>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
-        <div className='flex justify-between items-center mt-4'>
-          <h5 className='text-lg text-black font-semibold'>
-            Total Price: {calculateTotal()}
-          </h5>
-          <button
-            className='px-3 py-2 rounded-md bg-[#2cb1bc] hover:bg-[#14919b] text-[#fff] text-[14px] border-0'
-            onClick={handlePurchase}
-          >
-            Purchase Now
-          </button>
-        </div>
+        {/* Footer */}
+        {cartItems.length > 0 && (
+          <div className='p-6 border-t border-gray-200 bg-gray-50'>
+            <div className='flex justify-between items-center mb-4'>
+              <h5 className='text-xl font-bold text-gray-800'>
+                Total: {calculateTotal()}
+              </h5>
+            </div>
+            <button
+              className='w-full py-3 px-4 rounded-lg bg-[#2cb1bc] hover:bg-[#14919b] text-white font-semibold text-lg border-0'
+              onClick={handlePurchase}
+            >
+              💳 Purchase Now
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

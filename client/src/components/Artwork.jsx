@@ -82,7 +82,7 @@ const Artwork = ({
 
         <button
           onClick={handleAddToCart}
-          className='w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#2cb1bc] to-[#14919b] hover:from-[#14919b] hover:to-[#0f7a87] text-white font-medium text-sm border-0 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg'
+          className='w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#2cb1bc] to-[#14919b] hover:from-[#14919b] hover:to-[#0f7a87] text-white font-medium text-sm border-0 transition-all duration-300 shadow-md hover:shadow-lg'
         >
           Add To Cart
         </button>

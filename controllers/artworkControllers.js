@@ -7,17 +7,28 @@ export const getAllArtworks = async (req, res) => {
   const { search, location, sort } = req.query;
   // console.log(search, location, sort);
   const queryObject = {};
+  
+  // Exclude current user's artworks from the results
+  queryObject.createdBy = { $ne: req.user.userId };
+  
   if (search || location) {
     // Check if search or location is present
     if (search && location) {
       queryObject.$and = [
         { title: { $regex: search, $options: 'i' } },
         { location: { $regex: location, $options: 'i' } },
+        { createdBy: { $ne: req.user.userId } },
       ];
     } else if (search) {
-      queryObject.title = { $regex: search, $options: 'i' };
+      queryObject.$and = [
+        { title: { $regex: search, $options: 'i' } },
+        { createdBy: { $ne: req.user.userId } },
+      ];
     } else {
-      queryObject.location = { $regex: location, $options: 'i' };
+      queryObject.$and = [
+        { location: { $regex: location, $options: 'i' } },
+        { createdBy: { $ne: req.user.userId } },
+      ];
     }
   }
 
