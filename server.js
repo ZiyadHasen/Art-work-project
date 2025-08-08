@@ -50,9 +50,10 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://art-work-project.onrender.com',
+  'https://artshowcase.vercel.app', 
   process.env.CLIENT_URL
 ];
+
 
 app.use(cors({
   origin: (origin, callback) => {
