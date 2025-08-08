@@ -26,9 +26,7 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
-
-  const navigate = useNavigate();
+  const isSubmitting = navigation.state === 'submitting'
 
   return (
     <Wrapper>
