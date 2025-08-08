@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Wrapper from '../assets/wrappers/Navbar';
 import { FaAlignLeft, FaCartPlus } from 'react-icons/fa';
 import Logo from './logo';
