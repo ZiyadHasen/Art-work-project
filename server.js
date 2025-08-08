@@ -46,14 +46,25 @@ app.use(express.static(path.resolve(__dirname, './client/dist')));
 app.use('/uploads', express.static(path.resolve(__dirname, './public/uploads')));
 app.use(cookieParser());
 app.use(express.json());
-app.use(
-  cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? process.env.CLIENT_URL 
-      : ['http://localhost:5173', 'http://localhost:3000', 'https://art-work-project.onrender.com'],
-    credentials: true,
-  })
-);
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://art-work-project.onrender.com',
+  process.env.CLIENT_URL
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 
 //! Routes
 app.use('/api/v1/artworks', authenticateUser, artworkRouter);
