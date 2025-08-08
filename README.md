@@ -109,7 +109,7 @@ A modern, full-stack e-commerce platform for Ethiopian artists to showcase and s
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/ethiopian-art-gallery.git
+git clone https://github.com/ZiyadHasen/Art-work-project.git
 cd ethiopian-art-gallery
 ```
 
@@ -295,3 +295,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ⭐ **Star this repository if you found it helpful!** ⭐
+
