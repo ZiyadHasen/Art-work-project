@@ -42,7 +42,10 @@ if (process.env.NODE_ENV === 'development') {
 app.use(helmet());
 app.use(mongoSanitize());
 
-app.use(express.static(path.resolve(__dirname, './client/dist')));
+// Only serve static files in development or if explicitly configured
+if (process.env.NODE_ENV === 'development' || process.env.SERVE_CLIENT === 'true') {
+  app.use(express.static(path.resolve(__dirname, './client/dist')));
+}
 app.use('/uploads', express.static(path.resolve(__dirname, './public/uploads')));
 app.use(cookieParser());
 app.use(express.json());
@@ -101,9 +104,12 @@ app.post('/api/v1/create-checkout-session', async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
-});
+// Only serve the React app in development or if explicitly configured
+if (process.env.NODE_ENV === 'development' || process.env.SERVE_CLIENT === 'true') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
+  });
+}
 
 //! Error middleware
 app.use(errorHandlerMiddleware);
