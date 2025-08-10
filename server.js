@@ -53,7 +53,7 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://artshowcase.vercel.app', 
+  'https://art-work-project.vercel.app', 
   process.env.CLIENT_URL
 ];
 
