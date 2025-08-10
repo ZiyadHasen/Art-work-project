@@ -289,10 +289,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-- **Project Link**: [https://github.com/yourusername/ethiopian-art-gallery](https://github.com/yourusername/ethiopian-art-gallery)
-- **Email**: your.email@example.com
+- **Project Link**: https://github.com/ZiyadHasen/Art-work-project
+- **Live**: https://art-work-project.vercel.app/
+- **Email**: hziyad933@gmail.com
 
 ---
 
 ⭐ **Star this repository if you found it helpful!** ⭐
+
 
