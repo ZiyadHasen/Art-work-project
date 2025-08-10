@@ -70,6 +70,11 @@ app.use(cors({
 }));
 
 
+//! Test endpoint
+app.get('/api/v1/test', (req, res) => {
+  res.json({ message: 'Server is working' });
+});
+
 //! Routes
 app.use('/api/v1/artworks', authenticateUser, artworkRouter);
 app.use('/api/v1/users', authenticateUser, userRouter);

@@ -64,9 +64,15 @@ export const getMyArtworks = async (req, res) => {
 
 export const createArtwork = async (req, res) => {
   try {
+    console.log('Creating artwork with body:', req.body);
+    console.log('File:', req.file);
+    console.log('User:', req.user);
+    
     const newArtwork = { ...req.body };
     if (req.file) {
+      console.log('Uploading file to Cloudinary:', req.file.path);
       const response = await cloudinary.uploader.upload(req.file.path);
+      console.log('Cloudinary response:', response);
       await fs.unlink(req.file.path);
       newArtwork.avatar = response.secure_url;
       newArtwork.avatarPublicId = response.public_id;
@@ -75,11 +81,14 @@ export const createArtwork = async (req, res) => {
     // Adding fields to newArtwork
     newArtwork.createdBy = req.user.userId;
     newArtwork.createdByName = req.user.name;
-
+    
+    console.log('Creating artwork with data:', newArtwork);
     const artwork = await Artwork.create(newArtwork);
+    console.log('Artwork created successfully:', artwork);
     res.status(StatusCodes.CREATED).json({ artwork });
   } catch (error) {
-    console.error(error);
+    console.error('Error in createArtwork:', error);
+    console.error('Error stack:', error.stack);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       message: 'Failed to create artwork. Please try again later.',
       error: error.message,
