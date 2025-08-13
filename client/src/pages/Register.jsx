@@ -25,6 +25,7 @@ const Register = () => {
     try {
       await customFetch.post('/auth/demo-login');
       toast.success('Demo login successful');
+      // Redirect to dashboard (works for both local and production)
       window.location.href = '/dashboard';
     } catch (error) {
       toast.error(error?.response?.data?.msg);
