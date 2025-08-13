@@ -3,6 +3,7 @@ import {
   Form,
   redirect,
   useNavigation,
+  useNavigate,
 } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
 import { FormRow, Logo } from '../components';
@@ -25,16 +26,21 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const navigation = useNavigation();
+  const navigate = useNavigate();
   const isSubmitting = navigation.state === 'submitting';
 
   const handleDemoLogin = async () => {
     try {
-      await customFetch.post('/auth/demo-login');
+      console.log('Attempting demo login...');
+      const response = await customFetch.post('/auth/demo-login');
+      console.log('Demo login response:', response);
       toast.success('Demo login successful');
-      // Redirect to dashboard (works for both local and production)
-      window.location.href = '/dashboard';
+      console.log('Redirecting to dashboard...');
+      // Use React Router navigation instead of window.location.href
+      navigate('/dashboard');
     } catch (error) {
-      toast.error(error?.response?.data?.msg);
+      console.error('Demo login error:', error);
+      toast.error(error?.response?.data?.msg || 'Demo login failed');
     }
   };
 

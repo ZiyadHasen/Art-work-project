@@ -1,9 +1,8 @@
-import React from 'react';
 import { Outlet, redirect, useLoaderData, useNavigate } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Dashboard';
 import { Navbar, BigSidebar, SmallNavbar } from '../components';
 
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { checkDefaultTheme } from '../App';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
@@ -12,19 +11,37 @@ import CartProvider from '../contexts/cartContext'; // Import CartProvider
 export const loader = async () => {
   try {
     const { data } = await customFetch.get('/users/current-user');
+    console.log('Dashboard loader - User data:', data);
     return data;
   } catch (error) {
-    return redirect('/');
+    console.error('Dashboard loader error:', error);
+    // For demo users, don't redirect to home if there's an error
+    if (error?.response?.status === 401) {
+      return redirect('/');
+    }
+    // For other errors, try to continue
+    console.log('Continuing with dashboard despite error');
+    return { user: null };
   }
 };
 
 const DashboardContext = createContext();
 
 const DashboardLayout = () => {
-  const { user } = useLoaderData();
+  const data = useLoaderData();
+  const user = data?.user || null;
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme);
+
+  // Add error boundary effect
+  useEffect(() => {
+    if (!user) {
+      console.log('No user data, redirecting to home');
+      navigate('/');
+      return;
+    }
+  }, [user, navigate]);
 
   const toggleDarkTheme = () => {
     const newDarkTheme = !isDarkTheme;
@@ -32,15 +49,26 @@ const DashboardLayout = () => {
     document.body.classList.toggle('dark-theme', newDarkTheme);
     localStorage.setItem('darkTheme', newDarkTheme);
   };
+  
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
 
   const logoutUser = async () => {
-    navigate('/');
-    await customFetch.get('/auth/logout');
-    toast.success('logging out ...');
+    try {
+      navigate('/');
+      await customFetch.get('/auth/logout');
+      toast.success('logging out ...');
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast.error('Logout failed');
+    }
   };
+
+  // Don't render if no user
+  if (!user) {
+    return null;
+  }
 
   return (
     <DashboardContext.Provider

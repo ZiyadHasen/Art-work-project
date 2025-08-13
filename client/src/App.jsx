@@ -30,6 +30,7 @@ import { loader as StatsLoader } from './pages/Stats';
 import { action as ProfileAction } from './pages/Profile';
 import CartSuccess from './pages/CartSuccess';
 import CartCancel from './pages/CartCancel';
+import ErrorBoundary from './components/ErrorBoundary';
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
@@ -116,7 +117,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  );
 };
 
 export default App;
