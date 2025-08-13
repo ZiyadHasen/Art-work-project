@@ -1,5 +1,7 @@
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   HomeLayout,
   Landing,
@@ -120,6 +122,20 @@ const App = () => {
   return (
     <ErrorBoundary>
       <RouterProvider router={router} />
+      <ToastContainer 
+        position="top-right" 
+        autoClose={3000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick 
+        rtl={false} 
+        pauseOnFocusLoss 
+        draggable 
+        pauseOnHover 
+        theme="light"
+        style={{ zIndex: 9999999 }}
+        toastStyle={{ zIndex: 9999999 }}
+      />
     </ErrorBoundary>
   );
 };

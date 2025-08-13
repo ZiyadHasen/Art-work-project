@@ -1,9 +1,13 @@
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import customFetch from '../utils/customFetch';
+import { useCartContext } from '../contexts/cartContext';
+import { toast } from 'react-toastify';
 
 const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
+  const { isDemoUser } = useCartContext();
+  
   console.log(cartItems);
   useEffect(() => {
     if (show) {
@@ -30,6 +34,13 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
   };
 
   const handlePurchase = async () => {
+    if (isDemoUser) {
+      // For demo users, show a demo purchase message
+      toast.success('🎉 Demo Purchase Successful! This is a demo transaction - no real payment was processed.');
+      handleClose();
+      return;
+    }
+
     try {
       const response = await customFetch.post('/create-checkout-session', {
         items: cartItems,
@@ -42,11 +53,11 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
         window.location.href = data.url; // Redirect to Stripe Checkout
       } else {
         console.error('Error:', data.error);
-        alert('Failed to create checkout session');
+        toast.error('Failed to create checkout session');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred during checkout');
+      toast.error('An error occurred during checkout');
     }
   };
 
@@ -63,8 +74,13 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
       >
         {/* Header */}
         <div className='flex justify-between items-center p-6 border-b border-gray-200 bg-[#2cb1bc] text-white'>
-          <h2 className='text-xl font-semibold'>
+          <h2 className='text-xl font-semibold flex items-center gap-2'>
             🛒 Cart Summary
+            {isDemoUser && (
+              <span className='bg-yellow-400 text-black text-xs px-2 py-1 rounded-full font-bold'>
+                DEMO
+              </span>
+            )}
           </h2>
           <button
             onClick={handleClose}
@@ -73,6 +89,22 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
             <FaTimes />
           </button>
         </div>
+
+        {/* Demo Notice */}
+        {isDemoUser && (
+          <div className='bg-yellow-50 border-l-4 border-yellow-400 p-4'>
+            <div className='flex'>
+              <div className='flex-shrink-0'>
+                <span className='text-yellow-400 text-lg'>⚠️</span>
+              </div>
+              <div className='ml-3'>
+                <p className='text-sm text-yellow-700'>
+                  <strong>Demo Mode:</strong> This is a demonstration. Your cart items and purchases are not saved permanently.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Content */}
         <div className='p-6 max-h-96 overflow-y-auto'>
@@ -90,9 +122,16 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
                   className='flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors duration-200'
                 >
                   <div className='flex-1'>
-                    <h5 className='text-lg font-semibold text-gray-800 mb-1'>
-                      {item.artwork.title}
-                    </h5>
+                    <div className='flex items-center gap-2 mb-1'>
+                      <h5 className='text-lg font-semibold text-gray-800'>
+                        {item.artwork.title}
+                      </h5>
+                      {item.isDemoItem && (
+                        <span className='bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full'>
+                          DEMO
+                        </span>
+                      )}
+                    </div>
                     <p className='text-gray-600 font-medium'>
                       {Number(item.artwork.price).toLocaleString()} birr
                     </p>
@@ -119,10 +158,14 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
               </h5>
             </div>
             <button
-              className='w-full py-3 px-4 rounded-lg bg-[#2cb1bc] hover:bg-[#14919b] text-white font-semibold text-lg border-0'
+              className={`w-full py-3 px-4 rounded-lg font-semibold text-lg border-0 ${
+                isDemoUser 
+                  ? 'bg-green-500 hover:bg-green-600 text-white' 
+                  : 'bg-[#2cb1bc] hover:bg-[#14919b] text-white'
+              }`}
               onClick={handlePurchase}
             >
-              💳 Purchase Now
+              {isDemoUser ? '🎉 Demo Purchase' : '💳 Purchase Now'}
             </button>
           </div>
         )}

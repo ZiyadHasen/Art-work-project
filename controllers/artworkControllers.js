@@ -6,30 +6,41 @@ import { promises as fs } from 'fs';
 export const getAllArtworks = async (req, res) => {
   try {
     const { search, location, sort } = req.query;
-    // console.log(search, location, sort);
     const queryObject = {};
-    
-    // Exclude current user's artworks from the results
-    queryObject.createdBy = { $ne: req.user.userId };
-    
+
+    // For demo users, show all artworks (don't exclude their own)
+    if (!req.user.isDemoUser) {
+      // Exclude current user's artworks from the results for real users
+      queryObject.createdBy = { $ne: req.user.userId };
+    }
+
     if (search || location) {
       // Check if search or location is present
       if (search && location) {
         queryObject.$and = [
           { title: { $regex: search, $options: 'i' } },
           { location: { $regex: location, $options: 'i' } },
-          { createdBy: { $ne: req.user.userId } },
         ];
+        // Only exclude user's own artworks for real users
+        if (!req.user.isDemoUser) {
+          queryObject.$and.push({ createdBy: { $ne: req.user.userId } });
+        }
       } else if (search) {
         queryObject.$and = [
           { title: { $regex: search, $options: 'i' } },
-          { createdBy: { $ne: req.user.userId } },
         ];
+        // Only exclude user's own artworks for real users
+        if (!req.user.isDemoUser) {
+          queryObject.$and.push({ createdBy: { $ne: req.user.userId } });
+        }
       } else {
         queryObject.$and = [
           { location: { $regex: location, $options: 'i' } },
-          { createdBy: { $ne: req.user.userId } },
         ];
+        // Only exclude user's own artworks for real users
+        if (!req.user.isDemoUser) {
+          queryObject.$and.push({ createdBy: { $ne: req.user.userId } });
+        }
       }
     }
 
@@ -63,20 +74,62 @@ export const getAllArtworks = async (req, res) => {
 
 export const getMyArtworks = async (req, res) => {
   try {
-    // Demo users don't have persisted artworks
+    // Demo users get mock artworks for demonstration
     if (req.user.isDemoUser) {
-      return res.status(StatusCodes.OK).json({ artworks: [] });
+      const mockArtworks = [
+        {
+          _id: 'demo_artwork_1',
+          title: 'Demo Artwork 1',
+          description: 'This is a demo artwork for preview purposes',
+          price: 150,
+          location: 'Demo City',
+          image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500',
+          createdAt: new Date(),
+          createdBy: req.user.userId,
+        },
+        {
+          _id: 'demo_artwork_2',
+          title: 'Demo Artwork 2',
+          description: 'Another demo artwork to show functionality',
+          price: 200,
+          location: 'Demo City',
+          image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500',
+          createdAt: new Date(),
+          createdBy: req.user.userId,
+        },
+      ];
+      return res.status(StatusCodes.OK).json({ artworks: mockArtworks });
     }
-    
+
     const artworks = await Artwork.find({ createdBy: req.user.userId });
-    // console.log(req.user.name);
-    // console.log(artworks);
     res.status(StatusCodes.OK).json({ artworks });
   } catch (error) {
     console.error('Error in getMyArtworks:', error);
-    // If database is not available but user is demo, return empty array
+    // If database is not available but user is demo, return mock data
     if (req.user.isDemoUser) {
-      return res.status(StatusCodes.OK).json({ artworks: [] });
+      const mockArtworks = [
+        {
+          _id: 'demo_artwork_1',
+          title: 'Demo Artwork 1',
+          description: 'This is a demo artwork for preview purposes',
+          price: 150,
+          location: 'Demo City',
+          image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500',
+          createdAt: new Date(),
+          createdBy: req.user.userId,
+        },
+        {
+          _id: 'demo_artwork_2',
+          title: 'Demo Artwork 2',
+          description: 'Another demo artwork to show functionality',
+          price: 200,
+          location: 'Demo City',
+          image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500',
+          createdAt: new Date(),
+          createdBy: req.user.userId,
+        },
+      ];
+      return res.status(StatusCodes.OK).json({ artworks: mockArtworks });
     }
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Error fetching artworks' });
   }
