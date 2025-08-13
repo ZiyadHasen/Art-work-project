@@ -24,15 +24,11 @@ const Register = () => {
 
   const handleDemoLogin = async () => {
     try {
-      console.log('Attempting demo login...');
-      const response = await customFetch.post('/auth/demo-login');
-      console.log('Demo login response:', response);
-      toast.success('Demo login successful');
-      console.log('Redirecting to dashboard...');
+      await customFetch.post('/auth/demo-login');
+      // Remove the success toast for demo login
       // Use React Router navigation instead of window.location.href
       navigate('/dashboard');
     } catch (error) {
-      console.error('Demo login error:', error);
       toast.error(error?.response?.data?.msg || 'Demo login failed');
     }
   };
@@ -56,7 +52,6 @@ const Register = () => {
         </button>
 
         <div className='demo-section'>
-          <p className='demo-text'>Want to try the app?</p>
           <button
             type='button'
             className='button button-block demo-btn'

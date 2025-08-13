@@ -11,16 +11,13 @@ import CartProvider from '../contexts/cartContext'; // Import CartProvider
 export const loader = async () => {
   try {
     const { data } = await customFetch.get('/users/current-user');
-    console.log('Dashboard loader - User data:', data);
     return data;
   } catch (error) {
-    console.error('Dashboard loader error:', error);
     // For demo users, don't redirect to home if there's an error
     if (error?.response?.status === 401) {
       return redirect('/');
     }
     // For other errors, try to continue
-    console.log('Continuing with dashboard despite error');
     return { user: null };
   }
 };
@@ -37,7 +34,6 @@ const DashboardLayout = () => {
   // Add error boundary effect
   useEffect(() => {
     if (!user) {
-      console.log('No user data, redirecting to home');
       navigate('/');
       return;
     }
@@ -60,7 +56,6 @@ const DashboardLayout = () => {
       await customFetch.get('/auth/logout');
       toast.success('logging out ...');
     } catch (error) {
-      console.error('Logout error:', error);
       toast.error('Logout failed');
     }
   };

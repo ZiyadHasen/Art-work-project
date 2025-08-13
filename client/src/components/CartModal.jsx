@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
   const { isDemoUser } = useCartContext();
   
-  console.log(cartItems);
   useEffect(() => {
     if (show) {
       document.body.style.overflow = 'hidden'; // Disable scrolling
@@ -47,16 +46,13 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (response.ok) {
         window.location.href = data.url; // Redirect to Stripe Checkout
       } else {
-        console.error('Error:', data.error);
         toast.error('Failed to create checkout session');
       }
     } catch (error) {
-      console.error('Error:', error);
       toast.error('An error occurred during checkout');
     }
   };

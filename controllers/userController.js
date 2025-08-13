@@ -26,7 +26,6 @@ export const getCurrentUser = async (req, res) => {
     const userWithoutPassword = user.toJSON();
     res.status(StatusCodes.OK).json({ user: userWithoutPassword });
   } catch (error) {
-    console.error('Error in getCurrentUser:', error);
     // If database is not available but user is demo, still return demo user
     if (req.user.isDemoUser) {
       const demoUser = {

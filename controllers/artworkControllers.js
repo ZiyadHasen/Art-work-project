@@ -66,7 +66,6 @@ export const getAllArtworks = async (req, res) => {
     const numOfPages = Math.ceil(totalArtworks / limit);
     res.status(StatusCodes.OK).json({ totalArtworks, numOfPages, artworks });
   } catch (error) {
-    console.error('Error in getAllArtworks:', error);
     // If database is not available, return empty results
     res.status(StatusCodes.OK).json({ totalArtworks: 0, numOfPages: 0, artworks: [] });
   }
@@ -104,7 +103,6 @@ export const getMyArtworks = async (req, res) => {
     const artworks = await Artwork.find({ createdBy: req.user.userId });
     res.status(StatusCodes.OK).json({ artworks });
   } catch (error) {
-    console.error('Error in getMyArtworks:', error);
     // If database is not available but user is demo, return mock data
     if (req.user.isDemoUser) {
       const mockArtworks = [

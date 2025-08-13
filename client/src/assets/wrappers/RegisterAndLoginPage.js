@@ -33,10 +33,9 @@ const Wrapper = styled.section`
   }
   .demo-section {
     margin: 1.5rem 0;
-    padding: 1rem;
-    background: var(--background-secondary-color);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--grey-200);
+    padding: 0;
+    background: transparent;
+    border: none;
   }
   .demo-text {
     margin: 0 0 0.75rem 0;
