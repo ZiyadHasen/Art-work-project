@@ -46,12 +46,11 @@ const Wrapper = styled.section`
   .demo-btn {
     background: var(--primary-600);
     color: var(--white);
-    border: 1px solid var(--primary-600);
+    border: none;
     transition: var(--transition);
   }
   .demo-btn:hover {
     background: var(--primary-700);
-    border-color: var(--primary-700);
   }
 `;
 export default Wrapper;
