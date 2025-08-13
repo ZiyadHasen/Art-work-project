@@ -105,11 +105,7 @@ const Artwork = ({
 
         <button
           onClick={handleAddToCart}
-          className={`w-full px-4 py-3 rounded-lg font-medium text-sm border-0 transition-all duration-300 shadow-md hover:shadow-lg ${
-            isDemoUser 
-              ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white'
-              : 'bg-gradient-to-r from-[#2cb1bc] to-[#14919b] hover:from-[#14919b] hover:to-[#0f7a87] text-white'
-          }`}
+          className='w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#2cb1bc] to-[#14919b] hover:from-[#14919b] hover:to-[#0f7a87] text-white font-medium text-sm border-0 transition-all duration-300 shadow-md hover:shadow-lg'
         >
           {isDemoUser ? '🎨 Add To Cart (Demo)' : 'Add To Cart'}
         </button>

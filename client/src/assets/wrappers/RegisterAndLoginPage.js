@@ -32,7 +32,7 @@ const Wrapper = styled.section`
     margin-left: 0.25rem;
   }
   .demo-section {
-    margin: 1.5rem 0;
+    margin: 0;
     padding: 0;
     background: transparent;
     border: none;

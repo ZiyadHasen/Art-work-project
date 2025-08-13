@@ -34,8 +34,7 @@ const CartModal = ({ show, handleClose, cartItems, removeFromCart }) => {
 
   const handlePurchase = async () => {
     if (isDemoUser) {
-      // For demo users, show a demo purchase message
-      toast.success('🎉 Demo Purchase Successful! This is a demo transaction - no real payment was processed.');
+      // For demo users, just close the modal without showing toast
       handleClose();
       return;
     }
