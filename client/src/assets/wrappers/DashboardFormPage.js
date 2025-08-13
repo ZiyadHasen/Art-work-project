@@ -8,6 +8,24 @@ const Wrapper = styled.section`
   .form-title {
     margin-bottom: 2rem;
   }
+  .demo-notice {
+    background: var(--primary-100);
+    border: 1px solid var(--primary-300);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .demo-notice h5 {
+    color: var(--primary-700);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .demo-notice p {
+    color: var(--primary-600);
+    margin: 0;
+    font-size: 0.875rem;
+  }
   .form {
     margin: 0;
     border-radius: 0;

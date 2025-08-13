@@ -4,62 +4,82 @@ import { v2 as cloudinary } from 'cloudinary';
 import { promises as fs } from 'fs';
 
 export const getAllArtworks = async (req, res) => {
-  const { search, location, sort } = req.query;
-  // console.log(search, location, sort);
-  const queryObject = {};
-  
-  // Exclude current user's artworks from the results
-  queryObject.createdBy = { $ne: req.user.userId };
-  
-  if (search || location) {
-    // Check if search or location is present
-    if (search && location) {
-      queryObject.$and = [
-        { title: { $regex: search, $options: 'i' } },
-        { location: { $regex: location, $options: 'i' } },
-        { createdBy: { $ne: req.user.userId } },
-      ];
-    } else if (search) {
-      queryObject.$and = [
-        { title: { $regex: search, $options: 'i' } },
-        { createdBy: { $ne: req.user.userId } },
-      ];
-    } else {
-      queryObject.$and = [
-        { location: { $regex: location, $options: 'i' } },
-        { createdBy: { $ne: req.user.userId } },
-      ];
+  try {
+    const { search, location, sort } = req.query;
+    // console.log(search, location, sort);
+    const queryObject = {};
+    
+    // Exclude current user's artworks from the results
+    queryObject.createdBy = { $ne: req.user.userId };
+    
+    if (search || location) {
+      // Check if search or location is present
+      if (search && location) {
+        queryObject.$and = [
+          { title: { $regex: search, $options: 'i' } },
+          { location: { $regex: location, $options: 'i' } },
+          { createdBy: { $ne: req.user.userId } },
+        ];
+      } else if (search) {
+        queryObject.$and = [
+          { title: { $regex: search, $options: 'i' } },
+          { createdBy: { $ne: req.user.userId } },
+        ];
+      } else {
+        queryObject.$and = [
+          { location: { $regex: location, $options: 'i' } },
+          { createdBy: { $ne: req.user.userId } },
+        ];
+      }
     }
+
+    const sortOptions = {
+      newest: '-createdAt',
+      oldest: 'createdAt',
+      'a-z': 'title',
+      'z-a': '-title',
+    };
+
+    const sortKey = sortOptions[sort] || sortOptions.newest;
+
+    // ! setup pagination
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 8;
+    const skip = (page - 1) * limit;
+    const artworks = await Artwork.find(queryObject)
+      .sort(sortKey)
+      .skip(skip)
+      .limit(limit);
+
+    const totalArtworks = await Artwork.countDocuments(queryObject);
+    const numOfPages = Math.ceil(totalArtworks / limit);
+    res.status(StatusCodes.OK).json({ totalArtworks, numOfPages, artworks });
+  } catch (error) {
+    console.error('Error in getAllArtworks:', error);
+    // If database is not available, return empty results
+    res.status(StatusCodes.OK).json({ totalArtworks: 0, numOfPages: 0, artworks: [] });
   }
-
-  const sortOptions = {
-    newest: '-createdAt',
-    oldest: 'createdAt',
-    'a-z': 'title',
-    'z-a': '-title',
-  };
-
-  const sortKey = sortOptions[sort] || sortOptions.newest;
-
-  // ! setup pagination
-  const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 8;
-  const skip = (page - 1) * limit;
-  const artworks = await Artwork.find(queryObject)
-    .sort(sortKey)
-    .skip(skip)
-    .limit(limit);
-
-  const totalArtworks = await Artwork.countDocuments(queryObject);
-  const numOfPages = Math.ceil(totalArtworks / limit);
-  res.status(StatusCodes.OK).json({ totalArtworks, numOfPages, artworks });
 };
 
 export const getMyArtworks = async (req, res) => {
-  const artworks = await Artwork.find({ createdBy: req.user.userId });
-  // console.log(req.user.name);
-  // console.log(artworks);
-  res.status(StatusCodes.OK).json({ artworks });
+  try {
+    // Demo users don't have persisted artworks
+    if (req.user.isDemoUser) {
+      return res.status(StatusCodes.OK).json({ artworks: [] });
+    }
+    
+    const artworks = await Artwork.find({ createdBy: req.user.userId });
+    // console.log(req.user.name);
+    // console.log(artworks);
+    res.status(StatusCodes.OK).json({ artworks });
+  } catch (error) {
+    console.error('Error in getMyArtworks:', error);
+    // If database is not available but user is demo, return empty array
+    if (req.user.isDemoUser) {
+      return res.status(StatusCodes.OK).json({ artworks: [] });
+    }
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Error fetching artworks' });
+  }
 };
 
 export const createArtwork = async (req, res) => {

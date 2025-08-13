@@ -6,7 +6,7 @@ import {
   getPublicStats,
 } from '../controllers/userController.js';
 import { validateUpdateUserInput } from '../middleware/validationMiddleware.js';
-import { authorizePermissions } from '../middleware/authMiddleware.js';
+import { authorizePermissions, restrictDemoUser } from '../middleware/authMiddleware.js';
 import upload from '../middleware/multerMiddleware.js';
 const router = Router();
 
@@ -19,7 +19,7 @@ router.get(
 router.get('/stats', getPublicStats);
 router.patch(
   '/update-user',
-
+  restrictDemoUser,
   upload.single('avatar'),
   validateUpdateUserInput,
   updateUser

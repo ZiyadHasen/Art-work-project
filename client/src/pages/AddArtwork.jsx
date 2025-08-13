@@ -1,4 +1,4 @@
-import { FormRow, FormRowSelect } from '../components';
+import { FormRow } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useOutletContext } from 'react-router-dom';
 import { Form, useNavigation, redirect } from 'react-router-dom';
@@ -36,8 +36,16 @@ const AddJob = () => {
   const { user } = useOutletContext();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
+  const isDemoUser = user.role === 'demo';
+  
   return (
     <Wrapper>
+      {isDemoUser && (
+        <div className='demo-notice'>
+          <h5>Demo Mode</h5>
+          <p>You are currently in demo mode. Your actions will not be saved permanently.</p>
+        </div>
+      )}
       <Form method='post' className='form' encType='multipart/form-data'>
         <h4 className='form-title'>Add Your Artwork </h4>
 

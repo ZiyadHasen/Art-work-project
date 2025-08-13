@@ -13,6 +13,20 @@ const Wrapper = styled.div`
     height: 25px;
     border-radius: 50%;
   }
+  .demo-user-name {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .demo-badge {
+    background: var(--primary-500);
+    color: var(--white);
+    font-size: 0.6rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
   .dropdown {
     position: absolute;
     top: 45px;

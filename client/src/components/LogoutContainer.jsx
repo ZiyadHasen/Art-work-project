@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import Wrapper from '../assets/wrappers/LogoutContainer';
 import { useState } from 'react';
@@ -7,6 +6,8 @@ import { useDashboardContext } from '../pages/DashboardLayout';
 const LogoutContainer = () => {
   const [showLogout, setShowLogout] = useState(false);
   const { user, logoutUser } = useDashboardContext();
+  const isDemoUser = user.role === 'demo';
+  
   return (
     <Wrapper>
       <button
@@ -22,7 +23,10 @@ const LogoutContainer = () => {
           <FaUserCircle />
         )}
 
-        {user?.name}
+        <span className={isDemoUser ? 'demo-user-name' : ''}>
+          {user?.name}
+          {isDemoUser && <span className='demo-badge'>DEMO</span>}
+        </span>
         <FaCaretDown />
       </button>
       <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>

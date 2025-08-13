@@ -17,9 +17,10 @@ export const authenticateUser = (req, res, next) => {
   
   try {
     const { userId, role, name } = verifyJWT(token);
+    const isDemoUser = role === 'demo';
     const testUser = userId === '664ca606aeaabadce6e148bb';
-    req.user = { userId, role, name, testUser };
-    console.log('User authenticated:', { userId, role, name });
+    req.user = { userId, role, name, testUser, isDemoUser };
+    console.log('User authenticated:', { userId, role, name, isDemoUser });
     next();
   } catch (error) {
     console.log('Token verification failed:', error.message);
@@ -34,6 +35,13 @@ export const authorizePermissions = (...roles) => {
     }
     next();
   };
+};
+
+export const restrictDemoUser = (req, res, next) => {
+  if (req.user.isDemoUser) {
+    throw new UnauthorizedError('Demo users cannot perform this action. Please register for a full account.');
+  }
+  next();
 };
 
 

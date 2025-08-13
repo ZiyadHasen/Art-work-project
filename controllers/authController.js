@@ -49,3 +49,29 @@ export const logout = (req, res) => {
   });
   res.status(StatusCodes.OK).json({ msg: 'user logged out' });
 };
+
+export const demoLogin = async (req, res) => {
+  try {
+    // Create a demo user token without persisting to database
+    const demoUserId = `demo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    const token = createJWT({
+      userId: demoUserId,
+      role: 'demo',
+      name: 'Demo User',
+    });
+
+    const oneDay = 24 * 60 * 60 * 1000;
+    res.cookie('token', token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + oneDay),
+      secure: process.env.NODE_ENV === 'production', 
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    });
+
+    res.status(StatusCodes.OK).json({ msg: 'demo user logged in' });
+  } catch (error) {
+    console.error('Demo login error:', error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Demo login failed' });
+  }
+};

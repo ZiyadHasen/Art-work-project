@@ -5,10 +5,44 @@ import cloudinary from 'cloudinary';
 import { promises as fs } from 'fs';
 
 export const getCurrentUser = async (req, res) => {
-  const user = await User.findOne({ _id: req.user.userId });
-  // toJSON is function that is defined in the users model
-  const userWithoutPassword = user.toJSON();
-  res.status(StatusCodes.OK).json({ user: userWithoutPassword });
+  try {
+    // Handle demo users who don't exist in the database
+    if (req.user.isDemoUser) {
+      const demoUser = {
+        _id: req.user.userId,
+        name: req.user.name,
+        email: 'demo@example.com',
+        lastName: 'Demo',
+        location: 'Demo City',
+        role: 'demo',
+        avatar: '',
+        avatarPublicId: '',
+      };
+      return res.status(StatusCodes.OK).json({ user: demoUser });
+    }
+
+    const user = await User.findOne({ _id: req.user.userId });
+    // toJSON is function that is defined in the users model
+    const userWithoutPassword = user.toJSON();
+    res.status(StatusCodes.OK).json({ user: userWithoutPassword });
+  } catch (error) {
+    console.error('Error in getCurrentUser:', error);
+    // If database is not available but user is demo, still return demo user
+    if (req.user.isDemoUser) {
+      const demoUser = {
+        _id: req.user.userId,
+        name: req.user.name,
+        email: 'demo@example.com',
+        lastName: 'Demo',
+        location: 'Demo City',
+        role: 'demo',
+        avatar: '',
+        avatarPublicId: '',
+      };
+      return res.status(StatusCodes.OK).json({ user: demoUser });
+    }
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Error fetching user' });
+  }
 };
 export const getApplicationStats = async (req, res) => {
   const users = await User.countDocuments();

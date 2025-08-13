@@ -124,11 +124,13 @@ const port = process.env.PORT || 5500;
 (async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL);
-    app.listen(port, () => {
-      console.log(`Server running on PORT ${port}....`);
-    });
+    console.log('Connected to MongoDB successfully');
   } catch (error) {
-    console.log(error);
-    process.exit(1);
+    console.log('MongoDB connection failed:', error.message);
+    console.log('Server will start in demo mode (limited functionality)');
   }
+  
+  app.listen(port, () => {
+    console.log(`Server running on PORT ${port}....`);
+  });
 })();

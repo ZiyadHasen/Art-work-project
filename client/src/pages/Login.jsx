@@ -3,7 +3,6 @@ import {
   Form,
   redirect,
   useNavigation,
-  useNavigate,
 } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
 import { FormRow, Logo } from '../components';
@@ -26,7 +25,17 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting'
+  const isSubmitting = navigation.state === 'submitting';
+
+  const handleDemoLogin = async () => {
+    try {
+      await customFetch.post('/auth/demo-login');
+      toast.success('Demo login successful');
+      window.location.href = '/dashboard';
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+    }
+  };
 
   return (
     <Wrapper>
@@ -42,6 +51,18 @@ const Login = () => {
         >
           {isSubmitting ? 'submitting...' : 'submit'}
         </button>
+
+        <div className='demo-section'>
+          <p className='demo-text'>Want to try the app?</p>
+          <button
+            type='button'
+            className='button button-block demo-btn'
+            onClick={handleDemoLogin}
+            disabled={isSubmitting}
+          >
+            Demo User Login
+          </button>
+        </div>
 
         <p>
           Not a member yet?
