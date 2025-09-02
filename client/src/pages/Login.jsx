@@ -1,14 +1,9 @@
-import {
-  Link,
-  Form,
-  redirect,
-  useNavigation,
-  useNavigate,
-} from 'react-router-dom';
-import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
-import { FormRow, Logo } from '../components';
-import customFetch from '../utils/customFetch';
+import { Link, Form, redirect, useNavigation, } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { customFetch } from '../utils';
+import { Logo } from '../components';
+import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
+import { useState } from 'react';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -16,7 +11,6 @@ export const action = async ({ request }) => {
   try {
     await customFetch.post('/auth/login', data);
     toast.success('Login successful');
-
     return redirect('/dashboard');
   } catch (error) {
     toast.error(error?.response?.data?.msg);
@@ -26,17 +20,19 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const navigation = useNavigation();
-  const navigate = useNavigate();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === 'submitting'
+  const [isDemoLoggingIn, setIsDemoLoggingIn] = useState(false);
 
   const handleDemoLogin = async () => {
+    setIsDemoLoggingIn(true);
     try {
       await customFetch.post('/auth/demo-login');
       // Remove the success toast for demo login
-      // Use React Router navigation instead of window.location.href
-      navigate('/dashboard');
+      window.location.href = '/dashboard';
     } catch (error) {
       toast.error(error?.response?.data?.msg || 'Demo login failed');
+    } finally {
+      setIsDemoLoggingIn(false);
     }
   };
 
@@ -45,30 +41,46 @@ const Login = () => {
       <Form method='post' className='form'>
         <Logo />
         <h4>login</h4>
-        <FormRow type='email' name='email' />
-        <FormRow type='password' name='password' />
-        <button
-          type='submit'
-          className='button button-block my-3'
-          disabled={isSubmitting}
-        >
+        <div className='form-row'>
+          <label htmlFor='email' className='form-label'>
+            Email
+          </label>
+          <input
+            type='email'
+            name='email'
+            className='form-input'
+            defaultValue='test@test.com'
+            required
+          />
+        </div>
+        <div className='form-row'>
+          <label htmlFor='password' className='form-label'>
+            Password
+          </label>
+          <input
+            type='password'
+            name='password'
+            className='form-input'
+            defaultValue='secret123'
+            required
+          />
+        </div>
+        <button type='submit' className='btn btn-block' disabled={isSubmitting}>
           {isSubmitting ? 'submitting...' : 'submit'}
         </button>
-
         <div className='demo-section'>
           <button
             type='button'
             className='button button-block demo-btn'
             onClick={handleDemoLogin}
-            disabled={isSubmitting}
+            disabled={isDemoLoggingIn}
           >
-            Demo User Login
+            {isDemoLoggingIn ? 'Logging in...' : 'Demo User Login'}
           </button>
         </div>
-
         <p>
           Not a member yet?
-          <Link to='/register' className=' member-btn'>
+          <Link to='/register' className='member-btn'>
             Register
           </Link>
         </p>
